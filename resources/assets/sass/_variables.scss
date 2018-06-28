@@ -1,8 +1,85 @@
 
-// Body
-$body-bg: #f5f8fa;
+
+$green: #51984e;
+$family-serif: 'Open Sans', sans-serif;
+$family-primary: $family-serif;
+$primary: $green;
+$body-background: #F1F1F1;
+
+
+$footer-color: #2E3234;
+$font-muted: #636c72;
+$box-background: #EDEFED;
+$radius-small: 0px;
+$radius: 0px;
+$radius-large: 0px;
+
+
+
+//TO BE REMOVE
+
+$enable-rounded: false;
+
+//old
+// Brands
+$brand-primary: #3097D1;
+$brand-info: #8eb4cb;
+$brand-success: #2ab27b;
+$brand-warning: #cbb956;
+$brand-danger:  #bf5329;
 
 // Typography
-$font-family-sans-serif: "Raleway", sans-serif;
-$font-size-base: 0.9rem;
+
+//$font-size-base: 14px;
 $line-height-base: 1.6;
+$text-color: #636b6f;
+
+
+// Navbar
+$navbar-default-bg: #fff;
+
+// Buttons
+$btn-default-color: $text-color;
+
+// Inputs
+$input-border: lighten($text-color, 40%);
+$input-border-focus: lighten($brand-primary, 25%);
+$input-color-placeholder: lighten($text-color, 30%);
+
+// Panels
+$panel-default-heading-bg: #fff;
+
+//handytravelers
+$primary-color: #51984e;
+$primary-color-dark: #428447;
+$sexy-green: #27AE60;
+$link-color: #268029;
+
+$secondary-color: #4f5a62;
+$font-color: #565a5c;
+
+
+
+
+$btn-primary-color: #FFFFFF;
+$btn-primary-bg: $primary_color;
+
+$border-color: #d9dad0;
+$border-radius-base: 0px;
+$border-radius-large: 0px;
+$section-height: 100px;
+
+$progress-bg: $border-color;
+
+//pagination
+$pagination-color:                     $primary-color;
+//$pagination-bg:                        #fff !default;
+//$pagination-border:                    #ddd !default;
+
+$pagination-hover-color:               #ffffff;
+$pagination-hover-bg:                  $primary-color;
+$pagination-hover-border:              $primary-color;
+
+$pagination-active-color:              #fff;
+$pagination-active-bg:                 $primary-color;
+$pagination-active-border:             $primary-color;

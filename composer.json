@@ -9,6 +9,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.6.*",
+        "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0"
     },
     "require-dev": {
@@ -24,7 +25,7 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "Handytravelers\\": "app/"
         }
     },
     "autoload-dev": {

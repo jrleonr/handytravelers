@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Handytravelers;
 
 use Laravel\Cashier\Billable;
 use Illuminate\Notifications\Notifiable;

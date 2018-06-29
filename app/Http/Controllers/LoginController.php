@@ -121,14 +121,8 @@ class LoginController extends Controller
 
     protected function redirectUserTo($user)
     {
-        if (str_contains($user->locale, 'es')) {
-            $route = LaravelLocalization::getLocalizedURL('es', route('edit.profile'));
-        } else {
-            $route = LaravelLocalization::getLocalizedURL('en', route('edit.profile'));
-        }
-
         if (!$user->filled()) {
-            return redirect($route);
+            return redirect(route('edit.profile'));
         }
 
         return $this->sendLoginResponse(request());

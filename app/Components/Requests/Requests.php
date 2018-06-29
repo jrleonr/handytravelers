@@ -8,7 +8,7 @@ use Handytravelers\Components\Homes\Exceptions\HostsCannotAnswerInvitationExcept
 use Handytravelers\Components\Homes\Exceptions\RequestHasInvitationForUserException;
 use Handytravelers\Components\Homes\Exceptions\UserCityisNotRequestedCityException;
 use Handytravelers\Components\Homes\Exceptions\UsersCantInviteThemselves;
-use Handytravelers\Components\Homes\Models\Home;
+use Handytravelers\Components\Offers\Models\Home;
 use Handytravelers\Components\Homes\Models\{Request,Invitation,Message,Participant};
 use Handytravelers\Components\Places\Models\Place;
 use Handytravelers\Components\Places\Places;

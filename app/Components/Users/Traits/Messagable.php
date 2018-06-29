@@ -2,7 +2,7 @@
 
 namespace Handytravelers\Components\Users\Traits;
 
-use Handytravelers\Components\Homes\Models\Invitation;
+use Handytravelers\Components\Requests\Models\Request;
 
 trait Messagable
 {
@@ -33,7 +33,7 @@ trait Messagable
      */
     public function participant()
     {
-        return $this->belongsToMany(Invitation::class, 'participants');
+        return $this->belongsToMany(Request::class, 'participants');
     }
 
     /**
@@ -43,7 +43,7 @@ trait Messagable
      */
     public function newMessagesCount()
     {
-        return $this->invitationsWithNewMessages()->count();
+        return $this->requestsWithNewMessages()->count();
     }
 
     /**
@@ -51,11 +51,11 @@ trait Messagable
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function invitationsWithNewMessages()
+    public function requestsWithNewMessages()
     {
         return $this->participant()->where(function ($q) {
                 $q->whereNull('participants.last_read');
-                $q->orWhere('invitations.updated_at', '>', $this->getConnection()->raw( 'participants.last_read'));
+                $q->orWhere('requests.updated_at', '>', $this->getConnection()->raw( 'participants.last_read'));
             })->get();
     }
 

@@ -287,10 +287,10 @@ class Request extends Model
         return $this->belongsTo(User::class, 'sent_by');
     }
 
-    public function place()
-    {
-        return $this->request->place;
-    }
+    // public function place()
+    // {
+    //     return $this->request->place;
+    // }
 
     public function placeName()
     {
@@ -331,12 +331,12 @@ class Request extends Model
         }
     }
     
-    public function getTextByUserRole($type)
-    {
-        if ($type == 'host') {
-            return trans('common.writeHereYourMessage');
-        } else {
-            return trans('common.hostHasInvitedYou');
-        }
-    }
+    // public function getTextByUserRole($type)
+    // {
+    //     if ($type == 'host') {
+    //         return trans('common.writeHereYourMessage');
+    //     } else {
+    //         return trans('common.hostHasInvitedYou');
+    //     }
+    // }
 }

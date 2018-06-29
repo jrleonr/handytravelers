@@ -159,6 +159,7 @@ return [
         // Handytravelers\Providers\BroadcastServiceProvider::class,
         Handytravelers\Providers\EventServiceProvider::class,
         Handytravelers\Providers\RouteServiceProvider::class,
+        Handytravelers\Providers\ViewComposerServiceProvider::class,
 
     ],
 

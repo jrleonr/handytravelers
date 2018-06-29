@@ -3,7 +3,7 @@
 namespace Handytravelers\Components\Users;
 
 use Auth;
-use Handytravelers\Components\Homes\Models\Home;
+use Handytravelers\Components\Offers\Models\Home;
 use Handytravelers\Components\Images\Images;
 use Handytravelers\Components\Places\Places;
 use Handytravelers\Components\Users\Exceptions\UserEmailNotFoundException;
@@ -19,7 +19,7 @@ class Users
 {
 
     const GRAPH_URL = 'https://graph.facebook.com';
-    const VERSION = 'v2.8';
+    const VERSION = 'v3.0';
 
     /**
      * Get user from Facebook email or create it
@@ -36,10 +36,6 @@ class Users
         }
 
         if (!$user) {
-            if (!$attributes['verified']) {
-                Log::notice('UserIsNotVerifiedOnFacebookException: User tried to login with facebook without being verified.');
-                throw new UserIsNotVerifiedOnFacebookException;
-            }
 
             $user  = [
                 'facebook_id' => $attributes['id'],

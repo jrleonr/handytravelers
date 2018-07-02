@@ -12,14 +12,17 @@
 */
 
 //Auth::routes();
-
+//Auth
+Route::post('/logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
 Route::get('facebook', ['as' => 'login.facebook', 'uses' => 'LoginController@redirectToFacebook']);
 Route::get('facebookCallback', ['as' => 'login.facebookCallback', 'uses' => 'LoginController@handleFacebookCallback']);
+
 Route::get('/', ['as' => 'home', 'uses' => 'LandingController@getIndex']);
 Route::get('/privacy-terms', ['as' => 'privacyTerms', 'uses' => 'LandingController@getPrivacyTerms']);
 Route::get('/about', ['as' => 'about', 'uses' => 'LandingController@getAboutUs']);
 Route::get('how-it-works', ['as' => 'how-it-works', 'uses' => 'LandingController@getHowItWorks']);
-
+//Landings
+Route::get('/traveler/{user}', ['as' => 'profile', 'uses' => 'LandingController@profile']);
 
 //invitation
 Route::get('/request/new', ['as' => 'request.form', 'uses' => 'RequestController@showRequestForm']);

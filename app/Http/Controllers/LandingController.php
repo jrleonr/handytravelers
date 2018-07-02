@@ -4,7 +4,7 @@ namespace Handytravelers\Http\Controllers;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client as Guzzle;
-use Handytravelers\Components\Homes\Models\Request as r;
+use Handytravelers\Components\Requests\Models\Request as r;
 use Handytravelers\Components\Images\Images;
 use Handytravelers\Components\Places\Models\Place;
 use Handytravelers\Components\Users\Models\User;

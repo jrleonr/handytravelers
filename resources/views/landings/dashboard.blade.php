@@ -36,14 +36,14 @@
 
             <div class="column">
 
-                @if(count($requests) > 0)
+                {{-- @if(count($requests) > 0)
                 <p class="title is-3">{{ __('Travelers looking for a Host in your City') }}</p>
                 <div class="columns  is-multiline is-mobile">
                     @foreach($requests AS $request)
                     @include('request.card', ['request' => $request])
                     @endforeach
                 </div>
-                @endif
+                @endif --}}
                 
                 @if(count($myRequests) > 0)
                 <p class="title is-3">{{ __('Your requests') }}</p>

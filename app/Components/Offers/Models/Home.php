@@ -2,12 +2,14 @@
 
 namespace Handytravelers\Components\Offers\Models;
 
-use Handytravelers\Components\Places\Models\Place;
-use Handytravelers\Components\Users\Models\User;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Handytravelers\Components\Users\Models\User;
+use Handytravelers\Components\Places\Models\Place;
 
 class Home extends Model
 {
+    use Searchable;
 
     protected $guarded = [];
 
@@ -29,5 +31,30 @@ class Home extends Model
     public function place()
     {
         return $this->belongsTo(Place::class);
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        if(!$this->place) {
+            return [];
+        }
+
+        $array = $this->toArray();
+
+        $place = $this->place;
+        $array['city'] = $place->name;
+
+        $ancestors = $place->getAncestors();
+
+        foreach ($ancestors as $a) {
+           $array[$a['type']] = $a->name;
+        }
+
+        return $array;
     }
 }

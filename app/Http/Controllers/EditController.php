@@ -202,7 +202,7 @@ class EditController extends Controller
 
         $home = Auth::user()->home;
 
-        $home->update($request->intersect([
+        $home->update($request->only([
             'summary',
             'rules',
             'gender',
@@ -211,6 +211,16 @@ class EditController extends Controller
             'getting_around',
             'other'
         ]));
+        
+        // $home->update($request->intersect([
+        //     'summary',
+        //     'rules',
+        //     'gender',
+        //     'interaction',
+        //     'accommodation',
+        //     'getting_around',
+        //     'other'
+        // ]));
 
         // if ($request->has('wizard')) {
         //     return redirect()->route('edit.housemates');

@@ -20,7 +20,7 @@
 
     <!-- Scripts -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('/js/app.js') }}" defer></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?&v=3&key={{ env('GOOGLE_API_KEY_WEB') }}&libraries=places&language=en"></script>
 
     <!-- Metas -->

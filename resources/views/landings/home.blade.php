@@ -8,23 +8,13 @@
         <div class="container has-text-centered">
             <h1 class="title is-1">{{trans('common.titleHome')}}</h1>
             <h2 class="subtitle is-3">{{trans('common.subTitleHome')}}</h2>
-            <div class="field">
-              <div class="control">
-                <input class="input is-large" type="text" placeholder="Where are you going?">
-                <vue-google-autocomplete
-    id="map"
-    classname="form-control"
-    placeholder="Start typing"
-    v-on:placechanged="getAddressData"
->
-</vue-google-autocomplete>
-              </div>
-            </div>
+            @include('search/search-box')
         </div>
     </div>
     <div class="hero-footer">
         <div class="container">
-            
+        
+
         </div>
     </div>
 </section>

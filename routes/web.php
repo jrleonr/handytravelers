@@ -23,6 +23,7 @@ Route::get('/about', ['as' => 'about', 'uses' => 'LandingController@getAboutUs']
 Route::get('how-it-works', ['as' => 'how-it-works', 'uses' => 'LandingController@getHowItWorks']);
 //Landings
 Route::get('/traveler/{user}', ['as' => 'profile', 'uses' => 'LandingController@profile']);
+Route::get('/search', ['as' => 'search', 'uses' => 'SearchController@show']);
 
 //invitation
 Route::get('/request/new', ['as' => 'request.form', 'uses' => 'RequestController@showRequestForm']);

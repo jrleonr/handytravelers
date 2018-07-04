@@ -48,7 +48,13 @@ class Home extends Model
 
         $place = $this->place;
         $array['city'] = $place->name;
-
+        $users = $this->users;
+        foreach ($users as $user) {
+            $array['users']['username'] = $user->username;
+            $array['users']['first_name'] = $user->first_name;
+            $array['users']['image'] = $user->getMainPhoto(300);
+        }
+        
         $ancestors = $place->getAncestors();
 
         foreach ($ancestors as $a) {

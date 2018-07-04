@@ -22,7 +22,7 @@ class LandingController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', [ 'only' => ['dashboard', 'profile'] ]);
+        $this->middleware('auth', [ 'only' => ['dashboard'] ]);
     }
 
     /**

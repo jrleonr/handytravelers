@@ -49,6 +49,7 @@
                 </div>
                 </div> <!-- aside -->
                 <div id="main" class="column ">
+                    <a href="{{ route('request.form') }}/{{$profile->home_id}}" class="button is-primary">Request</a>
                     <div class="card">
                         <header class="card-header">
                             <p class="card-header-title">

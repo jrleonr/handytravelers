@@ -35,7 +35,7 @@
 		  			    					<div class="user-list-details card">
 		  			    						<div class="card-image">
 													<figure class="image ">
-														<a class="title is-4" :href=" '/traveler/' + result.users.username">
+														<a class="title is-4" :href=" '/traveler/' + result.users.username"	>
 															<img :src=" result.users.image ">
 														</a>
 												    	

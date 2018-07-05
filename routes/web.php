@@ -11,7 +11,7 @@
 |
 */
 
-//Auth::routes();
+Auth::routes();
 //Auth
 Route::post('/logout', ['as' => 'logout', 'uses' => 'LoginController@logout']);
 Route::get('facebook', ['as' => 'login.facebook', 'uses' => 'LoginController@redirectToFacebook']);
@@ -26,7 +26,7 @@ Route::get('/traveler/{user}', ['as' => 'profile', 'uses' => 'LandingController@
 Route::get('/search', ['as' => 'search', 'uses' => 'SearchController@show']);
 
 //invitation
-Route::get('/request/new', ['as' => 'request.form', 'uses' => 'RequestController@showRequestForm']);
+Route::get('/request/new/{home}', ['as' => 'request.form', 'uses' => 'RequestController@showRequestForm']);
 Route::post('/request/new', ['as' => 'request.form', 'uses' => 'RequestController@postRequestForm']);
 Route::get('/request/sent', ['as' => 'request.sent', 'uses' => 'RequestController@getRequestSent']);
 Route::get('/createCustomer/{requestId}', ['as' => 'request.showCreateCustomer', 'uses' => 'RequestController@showCreateCustomer']);

@@ -19,7 +19,7 @@ class Request extends Model
 
     protected $dates = ['check_in', 'check_out'];
 
-    protected $fillable = ['uuid','sent_by','status','request_id'];
+    protected $fillable = ['uuid','user_id','status','request_id'];
 
     public function deactivate()
     {
@@ -45,11 +45,6 @@ class Request extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function invitations()
-    {
-        return $this->hasMany(Invitation::class);
-    }
-
     public function place()
     {
         return $this->belongsTo(Place::class);
@@ -57,7 +52,7 @@ class Request extends Model
 
     public function isAPreviousInvitation($user_id)
     {
-        return $this->invitations()->where('sent_by', $user_id)->withTrashed()->count();
+        return $this->invitations()->where('user_id', $user_id)->withTrashed()->count();
     }
 
 
@@ -215,7 +210,7 @@ class Request extends Model
      */
     public function userRole(User $user)
     {
-        return ($user->home_id === User::getHomeId($this->sent_by)) ? 'host' : 'guest';
+        return ($user->home_id === User::getHomeId($this->user_id)) ? 'host' : 'guest';
     }
 
 
@@ -282,11 +277,6 @@ class Request extends Model
         return $this->hasMany(Participant::class);
     }
 
-    public function sentBy()
-    {
-        return $this->belongsTo(User::class, 'sent_by');
-    }
-
     // public function place()
     // {
     //     return $this->request->place;
@@ -314,7 +304,7 @@ class Request extends Model
 
     public function isFromDifferentPlace()
     {
-        if ($this->request->place_id !== $this->sentBy->home->place_id) {
+        if ($this->place_id !== $this->user->home->place_id) {
             return true;
         }
 
@@ -322,21 +312,21 @@ class Request extends Model
     }
 
 
-    public function getTextByUserRole()
-    {
-        if ($this->userRole == 'host' || $this->status == 'accepted') {
-            return trans('common.writeHereYourMessage');
-        } else {
-            return trans('common.hostHasInvitedYou');
-        }
-    }
-    
-    // public function getTextByUserRole($type)
+    // public function getTextByUserRole()
     // {
-    //     if ($type == 'host') {
+    //     if ($this->userRole == 'host' || $this->status == 'accepted') {
     //         return trans('common.writeHereYourMessage');
     //     } else {
     //         return trans('common.hostHasInvitedYou');
     //     }
     // }
+    
+    public function getTextByUserRole($type)
+    {
+        if ($type == 'host') {
+            return trans('common.writeHereYourMessage');
+        } else {
+            return trans('common.hostHasInvitedYou');
+        }
+    }
 }

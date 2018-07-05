@@ -2,7 +2,7 @@
 
 Hi {{ $invitation->request->user->first_name }},
 
-{{ $invitation->sentBy->first_name }} has sent you an invitation for your request to {{ $invitation->request->place->name }}
+{{ $invitation->user->first_name }} has sent you an invitation for your request to {{ $invitation->request->place->name }}
 
 @component('mail::panel')
 {{ str_limit($invitation->lastMessage(), 150) }}

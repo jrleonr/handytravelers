@@ -4,12 +4,12 @@ namespace Handytravelers\Http\Controllers;
 
 use Carbon\Carbon;
 use Handytravelers\Components\Homes\Exceptions\HomeRequestInactiveException;
-use Handytravelers\Components\Homes\Exceptions\RequestHasInvitationForUserException;
-use Handytravelers\Components\Homes\Exceptions\UserCityisNotRequestedCityException;
-use Handytravelers\Components\Homes\Exceptions\UsersCantInviteThemselves;
-use Handytravelers\Components\Homes\Models\Request;
-use Handytravelers\Components\Homes\Models\Request as RequestModel;
-use Handytravelers\Components\Homes\Requests as HomeRequest;
+use Handytravelers\Components\Requests\Exceptions\RequestHasInvitationForUserException;
+use Handytravelers\Components\Requests\Exceptions\UserCityisNotRequestedCityException;
+use Handytravelers\Components\Requests\Exceptions\UsersCantInviteThemselves;
+use Handytravelers\Components\Requests\Models\Request as RequestModel;
+use Handytravelers\Components\Offers\Models\Home;
+use Handytravelers\Components\Requests\Requests as HomeRequest;
 use Handytravelers\Components\Images\Images;
 use Handytravelers\Components\Payments\Exceptions\UserDoesntHaveStripeTokenException;
 use Handytravelers\Components\Users\Exceptions\CityWhereUserLiveException;
@@ -69,13 +69,15 @@ class RequestController extends Controller
      *
      * @return Response
      */
-    public function showRequestForm()
+    public function showRequestForm($home)
     {
+        $home = Home::where('id', $home)->with('users')->first();
+
         if (!Auth::user()->filled()) {
             return redirect()->route('edit.profile')->with('error', 'Complete your profile first');
         }
 
-        return view('request.new');
+        return view('request.new', compact('home'));
     }
 
 
@@ -179,25 +181,24 @@ class RequestController extends Controller
     public function getShowRequest($id)
     {
         $user = Auth::user();
-        
+    
         try {
-            $request = RequestModel::where('uuid', $id)->with('user')->firstOrFail();
+            
+            $request = RequestModel::where('uuid', $id)->with('user','messages')->firstOrFail();
 
-            if (!$user->home->filled() && $request->user_id != $user->id) {
-                return redirect()->route('edit.home')->with('error', 'To send a request you have to provide info about your home.');
-            }
+            //$host = User::where('username', $host)->with('home')->firstOrFail();
+
+            // if (!$user->home->filled() && $host->id != $user->id) {
+            //     return redirect()->route('edit.home')->with('error', 'To send a request you have to provide info about your home.');
+            // }
         } catch (ModelNotFoundException $e) {
             return redirect()->route('dashboard')->with('error', 'That Request is not longer available.');
         }
-       
-
-        $homeInvitation = $request->user->home_id;
 
         $type = 'host';
         
-        $request = [];
 
-        return view('request.show', compact('request', 'request', 'type'));
+        return view('request.show', compact('request', 'type'));
     }
 
     public function sendInvite(Request $request)

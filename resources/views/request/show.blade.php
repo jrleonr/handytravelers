@@ -10,14 +10,14 @@
         <div class="columns">
             <div class="column  is-two-thirds">
                 <div class="box">
-                    @if($invitation && (!$invitation->isInactive() && ( $invitation->isPending() && $type == 'guest')  || $invitation->isAccepted() ) )
+                    @if($request && (!$request->isInactive() && ( $request->isPending() && $type == 'guest')  || $request->isAccepted() ) )
                         @include('request._textformInvitation')
-                    @elseif(!$invitation && $request->user_id !== Auth::id() )
+                    @elseif(!$request && $request->user_id !== Auth::id() )
                         @include('request._textformRequest')
                     @else
-                        @if($invitation && $invitation->isInactive())
+                        @if($request && $request->isInactive())
                             <p class="title is-4">This request is closed</p>
-                        @elseif($invitation && $invitation->isPending())
+                        @elseif($request && $request->isPending())
                             <p class="title is-4">Waiting for the guest to anwser</p>
                         @else
                             <p class="title is-4">This is your request</p>
@@ -30,8 +30,8 @@
                         <p class="subtitle is-6">  {{ trans('common.readProfilesCarefully') }} </p>
                     </div>
                 </article>
-                @if($invitation)
-                    @include('request._message', ['messages' => $invitation->messages])
+                @if($request)
+                    @include('request._message', ['messages' => $request->messages])
                 @endif
                 @include('request._message', ['messages' => [$request]])
             </div>
@@ -45,9 +45,9 @@
                             <p>
                                 <strong> {{ trans('common.destination') }} </strong><br> {{$request->place->name}}
                             </p>
-                            @if($invitation && $invitation->isFromDifferentPlace())
+                            @if($request && $request->isFromDifferentPlace())
                             <p>
-                                <strong> {{ __('Invitation To') }} </strong><br> {{$invitation->sentBy->home->place->name}} ( < 40km {{$request->place->name}})
+                                <strong> {{ __('Invitation To') }} </strong><br> {{$request->user->home->place->name}} ( < 40km {{$request->place->name}})
                             </p>
                             @endif
                             <p>
@@ -61,14 +61,14 @@
                                 ·
                                 {{ $request->check_in->diffInDays($request->check_out) }} {{ trans('common.nights') }}
                             </p>
-                            @if($invitation)
-                            <span class="label {{$invitation->status}}">{{ \Lang::get('common.'.$invitation->status) }}</span>
+                            @if($request)
+                            <span class="label {{$request->status}}">{{ \Lang::get('common.'.$request->status) }}</span>
                             @endif
                         </div>
                     </div>
                 </div>
                 
-                @if($invitation && $type == 'guest')
+                @if($request && $type == 'guest')
                 <div class="message">
                     <div class="message-header">
                         <p>About this home </p>
@@ -86,9 +86,9 @@
                 
                 <h2 class="title is-5">In this Conversation</h2>
 
-                    @if($invitation)
-                    @foreach($invitation->participants AS $participant)
-                    @if($participant->type != $invitation->userRole)
+                    @if($request)
+                    @foreach($request->participants AS $participant)
+                    @if($participant->type != $request->userRole)
                     <div class="box" >
                     <a href="{{route('profile',[$participant->user->username])}}">
                     

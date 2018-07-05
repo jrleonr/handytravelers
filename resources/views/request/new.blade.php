@@ -11,17 +11,42 @@
         </div>
         <div class="columns">
             <div class="column is-4 content">
-                {!! __('common.requestDescription', ['this' => "<a href=".route('how-it-works').">". trans('common.how-it-works')."</a>"]) !!}
+                  
+                <h2 class="title is-5">In this Conversation</h2>
+
+                    @foreach($home->users AS $participant)
+                    
+                    <div class="box" >
+                    <a href="{{route('profile',[$participant->username])}}">
+                    
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <img  alt="{{$participant->first_name}}" src="{{$participant->getMainPhoto()}}">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{{$participant->first_name}}</strong>
+                                        <br>
+                                        <span class="text-muted">
+                                        {{$participant->home->place->name}}
+                                        </span><br>
+                                        <span class="text-muted">{{ trans('common.memberSince') }}  {{ $participant->created_at->year }}</span>        </p>
+                                    </div>
+                                </div>
+                            </article>
+
+                        </a>
+                         </div>
+                        @endforeach
             </div>
             <div class="column ">
                 <div class="card">
                     <div class="card-content">
                         <form action="{{route('request.form')}}" method="post">
                             <input type="hidden"  name="_token" value="{{ csrf_token() }}">
-                            <p class="control">
-                                <label for="place" class=" label ">{{__('common.whereLookingLocalHome')}}</label>
-                                <input value="{{ old('place') }}" name="place" id="from" class="input">
-                            </p>
                             
                             <div class="columns">
                                 <div class="column ">

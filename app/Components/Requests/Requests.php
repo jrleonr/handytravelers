@@ -3,13 +3,13 @@
 namespace Handytravelers\Components\Homes;
 
 use Carbon\Carbon;
-use Handytravelers\Components\Homes\Exceptions\HomeRequestInactiveException;
-use Handytravelers\Components\Homes\Exceptions\HostsCannotAnswerInvitationException;
-use Handytravelers\Components\Homes\Exceptions\RequestHasInvitationForUserException;
-use Handytravelers\Components\Homes\Exceptions\UserCityisNotRequestedCityException;
-use Handytravelers\Components\Homes\Exceptions\UsersCantInviteThemselves;
+use Handytravelers\Components\Requests\Exceptions\HomeRequestInactiveException;
+use Handytravelers\Components\Requests\Exceptions\HostsCannotAnswerInvitationException;
+use Handytravelers\Components\Requests\Exceptions\RequestHasInvitationForUserException;
+use Handytravelers\Components\Requests\Exceptions\UserCityisNotRequestedCityException;
+use Handytravelers\Components\Requests\Exceptions\UsersCantInviteThemselves;
 use Handytravelers\Components\Offers\Models\Home;
-use Handytravelers\Components\Homes\Models\{Request,Invitation,Message,Participant};
+use Handytravelers\Components\Requests\Models\{Request,Invitation,Message,Participant};
 use Handytravelers\Components\Places\Models\Place;
 use Handytravelers\Components\Places\Places;
 use Handytravelers\Components\Users\Exceptions\CityWhereUserLiveException;

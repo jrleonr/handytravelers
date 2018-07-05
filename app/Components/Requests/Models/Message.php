@@ -1,6 +1,6 @@
 <?php
 
-namespace Handytravelers\Components\Homes\Models;
+namespace Handytravelers\Components\Requests\Models;
 
 use Handytravelers\Components\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;

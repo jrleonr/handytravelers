@@ -44,7 +44,7 @@ class RequestController extends Controller
         $user = Auth::user();
 
         try {
-            $request = Request::byIdWithRequestAndParticipants($id);
+            $request = RequestModel::byIdWithRequestAndParticipants($id);
         } catch (ModelNotFoundException $e) {
             Session::flash('error', 'The request with ID: ' . $id . ' was not found.');
 
@@ -92,30 +92,33 @@ class RequestController extends Controller
         $user = Auth::user();
 
         $this->validate($request, [
-            'place' => 'required',
+            'offer_id' => 'required',
             'check_in' => 'required|date|date_format:Y-m-d|after:today',
             'check_out' => 'required|date|date_format:Y-m-d|after:check_in',
             'people' => 'required|integer|between:1,5',
             'body' => 'required|min:300',
         ]);
 
+
+
         try {
             $data = $request->all();
 
-            $homeRequest = new HomeRequest($user);
+            $home = Home::where('id', $data['offer_id'])->first();
+
+            //'accepted','declined','pending','cancelled'
+            $homeRequest = new HomeRequest($user, $home);
             $homeRequest = $homeRequest->create([
-                'place' => $data['place'],
+                'offer_id' => $data['offer_id'],
                 'check_in' => $data['check_in'],
                 'check_out' => $data['check_out'],
                 'people' => $data['people'],
                 'body' => $data['body']
             ]);
 
-            if ($homeRequest->active) {
-                return redirect()->route('request.sent');
-            }
+            return redirect()->route('request.sent');
 
-            return redirect()->route('request.showCreateCustomer', ['requestId' => $homeRequest->uuid]);
+            ///return redirect()->route('request.showCreateCustomer', ['requestId' => $homeRequest->uuid]);
         } catch (CityWhereUserLiveException $e) {
             return redirect()->route('dashboard')->with('error', 'You can\'t send a request where you live');
         } catch (ProfileNotCompletedException $e) {
@@ -125,41 +128,6 @@ class RequestController extends Controller
             ->with('error', 'We couldn\'t find that place using the Google Maps. We\'re really sorry.');
         }
     }
-
-    public function getRequestSent()
-    {
-        return view('request.sent');
-    }
-
-    public function showCreateCustomer($requestId)
-    {
-        return view('request.pay', compact('requestId'));
-    }
-
-
-    public function postCreateCustomer(Request $request)
-    {
-        $user = $request->user();
-
-        $this->validate($request, [
-            'stripeToken' => 'required',
-            'requestId' => 'required'
-        ]);
-
-        $homeRequest = new HomeRequest($user);
-
-        try {
-            $homeRequest->activate(
-                $homeRequest->getRequest($request->input('requestId')),
-                $request->input('stripeToken')
-            );
-        } catch (Card $e) {
-            return redirect()->route('request.showCreateCustomer', [$request->input('requestId')])->with('error', $e->getMessage());
-        }
-
-        return redirect()->route('request.sent');
-    }
-
 
     public function postDeleteRequest(Request $request)
     {
@@ -178,28 +146,28 @@ class RequestController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function getShowRequest($id)
-    {
-        $user = Auth::user();
+    // public function getShowRequest($id)
+    // {
+    //     $user = Auth::user();
     
-        try {
+    //     try {
             
-            $request = RequestModel::where('uuid', $id)->with('user','messages')->firstOrFail();
+    //         $request = RequestModel::where('uuid', $id)->with('user','messages')->firstOrFail();
 
-            //$host = User::where('username', $host)->with('home')->firstOrFail();
+    //         //$host = User::where('username', $host)->with('home')->firstOrFail();
 
-            // if (!$user->home->filled() && $host->id != $user->id) {
-            //     return redirect()->route('edit.home')->with('error', 'To send a request you have to provide info about your home.');
-            // }
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('dashboard')->with('error', 'That Request is not longer available.');
-        }
+    //         // if (!$user->home->filled() && $host->id != $user->id) {
+    //         //     return redirect()->route('edit.home')->with('error', 'To send a request you have to provide info about your home.');
+    //         // }
+    //     } catch (ModelNotFoundException $e) {
+    //         return redirect()->route('dashboard')->with('error', 'That Request is not longer available.');
+    //     }
 
-        $type = 'host';
+    //     $type = 'host';
         
 
-        return view('request.show', compact('request', 'type'));
-    }
+    //     return view('request.show', compact('request', 'type'));
+    // }
 
     public function sendInvite(Request $request)
     {
@@ -229,35 +197,20 @@ class RequestController extends Controller
     }
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function inbox()
-    {
-        $user = Auth::user();
-
-        $requests = $user->requests()->has('invitations')->with('invitations.participants.user')->latest('updated_at')->get();
-
-        $requests = $user->invitations()->latest('updated_at')->get();
-
-
-        return view('request.inbox', compact('requests', 'invitations'));
-    }
 
     public function postNewMessage(Request $request)
     {
         $this->validate($request, [
-            'body' => 'required'
+            'body' => 'required',
+            'requestId' => 'required'
         ]);
 
-        $request = Request::where('uuid', $request->input('invitationId'))->with('request')->firstOrFail();
+        $request = RequestModel::where('uuid', $request->input('requestId'))->firstOrFail();
 
         try {
             $homeRequest = new HomeRequest(Auth::user());
 
-            $homeRequest->responseInvitation(
+            $homeRequest->responseRequest(
                 $request,
                 request(['accept', 'decline', 'cancel', 'body'])
             );

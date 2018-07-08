@@ -19,8 +19,6 @@ class Request extends Model
 
     protected $dates = ['check_in', 'check_out'];
 
-    protected $fillable = ['uuid','user_id','status','request_id'];
-
     public function deactivate()
     {
         $this->forceFill([
@@ -45,14 +43,11 @@ class Request extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function place()
-    {
-        return $this->belongsTo(Place::class);
-    }
+    
 
     public function isAPreviousInvitation($user_id)
     {
-        return $this->invitations()->where('user_id', $user_id)->withTrashed()->count();
+        return $this->where('user_id', $user_id)->withTrashed()->count();
     }
 
 
@@ -277,10 +272,10 @@ class Request extends Model
         return $this->hasMany(Participant::class);
     }
 
-    // public function place()
-    // {
-    //     return $this->request->place;
-    // }
+    public function place()
+    {
+        return $this->belongsTo(Place::class);
+    }
 
     public function placeName()
     {

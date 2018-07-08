@@ -1,6 +1,6 @@
 <tr>
     <td>
-        <a href="{{route('invitation.show', [$invitation['uuid']])}}">
+        <a href="{{route('request.show', [$invitation['uuid']])}}">
             @foreach($invitation->participants as $participant)
             <img class="photo-round" height="45" width="45" title="{{$participant->first_name}}"
             src="{{$participant->user->getMainPhoto()}}"

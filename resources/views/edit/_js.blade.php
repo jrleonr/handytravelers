@@ -1,5 +1,5 @@
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?&v=3&key={{ env('GOOGLE_API_KEY_WEB') }}&libraries=places&language=en"></script>
+
 <script type="text/javascript" >
 
 
@@ -8,12 +8,12 @@
     });
 
     $(document).ready( function() {
-        var options = {
-          types: ['(cities)'],
-          componentRestrictions: {}
-      };
-      $("#from").geocomplete(options);  
-      $("#live").geocomplete(options);  
+      //   var options = {
+      //     types: ['(cities)'],
+      //     componentRestrictions: {}
+      // };
+      // $("#from").geocomplete(options);  
+      // $("#live").geocomplete(options);  
 
       setLanguages();
   });

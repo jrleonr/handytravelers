@@ -4,7 +4,7 @@ namespace Handytravelers\Components\Users\Models;
 
 use Carbon\Carbon;
 use Handytravelers\Components\Offers\Models\Home;
-use Handytravelers\Components\Homes\Models\Request;
+use Handytravelers\Components\Requests\Models\Request;
 use Handytravelers\Components\Images\Models\Image;
 use Handytravelers\Components\Payments\Models\Payment;
 //use Handytravelers\Components\Payments\Traits\Billable;
@@ -188,9 +188,9 @@ class User extends Authenticatable
         return $this->hasMany(Request::class);
     }
 
-    public function invitations()
-    {
-        //return $this->hasMany(Request::class, 'sent_by');
-        return $this->reques();
-    }
+    // public function invitations()
+    // {
+    //     //return $this->hasMany(Request::class, 'sent_by');
+    //     return $this->request();
+    // }
 }

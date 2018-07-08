@@ -12,7 +12,7 @@ class Participant extends Model
      *
      * @var array
      */
-    protected $fillable = ['invitation_id', 'user_id', 'last_read'];
+    protected $fillable = ['request_id', 'user_id', 'last_read'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -26,9 +26,9 @@ class Participant extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function invitation()
+    public function request()
     {
-        return $this->belongsTo(Invitation::class);
+        return $this->belongsTo(Request::class);
     }
 
     /**

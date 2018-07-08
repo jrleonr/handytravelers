@@ -12,14 +12,14 @@ class Message extends Model
      *
      * @var array
      */
-    protected $touches = ['invitation'];
+    protected $touches = ['request'];
 
     /**
      * The attributes that can be set with Mass Assignment.
      *
      * @var array
      */
-    protected $fillable = ['invitation_id', 'user_id', 'body'];
+    protected $fillable = ['request_id', 'user_id', 'body'];
 
     /**
      * Validation rules.
@@ -31,13 +31,13 @@ class Message extends Model
     ];
 
     /**
-     * Invitation relationship.
+     * Request relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function invitation()
+    public function request()
     {
-        return $this->belongsTo(Invitation::class);
+        return $this->belongsTo(Request::class);
     }
 
 

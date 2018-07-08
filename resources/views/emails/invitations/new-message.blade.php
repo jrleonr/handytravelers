@@ -7,7 +7,7 @@
 {{ $invitation->lastMessage() }}
 @endcomponent
 
-@component('mail::button', ['url' => route('invitation.show', [$invitation->uuid]), 'color' => 'green'])
+@component('mail::button', ['url' => route('request.show', [$invitation->uuid]), 'color' => 'green'])
 Go to Handytravelers
 @endcomponent
 

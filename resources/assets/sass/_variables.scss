@@ -15,11 +15,6 @@ $radius: 0px;
 $radius-large: 0px;
 
 
-
-//TO BE REMOVE
-
-$enable-rounded: false;
-
 //old
 // Brands
 $brand-primary: #3097D1;
@@ -30,8 +25,6 @@ $brand-danger:  #bf5329;
 
 // Typography
 
-//$font-size-base: 14px;
-$line-height-base: 1.6;
 $text-color: #636b6f;
 
 
@@ -72,14 +65,14 @@ $section-height: 100px;
 $progress-bg: $border-color;
 
 //pagination
-$pagination-color:                     $primary-color;
-//$pagination-bg:                        #fff !default;
-//$pagination-border:                    #ddd !default;
+// $pagination-color:                     $primary-color;
+// //$pagination-bg:                        #fff !default;
+// //$pagination-border:                    #ddd !default;
 
-$pagination-hover-color:               #ffffff;
-$pagination-hover-bg:                  $primary-color;
-$pagination-hover-border:              $primary-color;
+// $pagination-hover-color:               #ffffff;
+// $pagination-hover-bg:                  $primary-color;
+// $pagination-hover-border:              $primary-color;
 
-$pagination-active-color:              #fff;
-$pagination-active-bg:                 $primary-color;
-$pagination-active-border:             $primary-color;
+// $pagination-active-color:              #fff;
+// $pagination-active-bg:                 $primary-color;
+// $pagination-active-border:             $primary-color;

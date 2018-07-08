@@ -47,7 +47,7 @@
                     <div class="card-content">
                         <form action="{{route('request.form')}}" method="post">
                             <input type="hidden"  name="_token" value="{{ csrf_token() }}">
-                            
+                            <input type="hidden"  name="offer_id" value="{{ $home->getId() }}">
                             <div class="columns">
                                 <div class="column ">
                                     <div class="control">
@@ -102,5 +102,5 @@
 @stop
 @section('javascript')
 @include('edit._js')
-<script src="{{ asset('js/datepicker.js') }}"></script>
+<script src="{{ asset('js/datepicker.js') }}" defer></script>
 @stop

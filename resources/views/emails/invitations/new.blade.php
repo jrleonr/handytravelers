@@ -8,7 +8,7 @@ Hi {{ $invitation->request->user->first_name }},
 {{ str_limit($invitation->lastMessage(), 150) }}
 @endcomponent
 
-@component('mail::button', ['url' => route('invitation.show', [$invitation->uuid] )])
+@component('mail::button', ['url' => route('request.show', [$invitation->uuid] )])
 Response now
 @endcomponent
 

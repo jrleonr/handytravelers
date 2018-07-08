@@ -2,7 +2,7 @@
 
 namespace Handytravelers\Http\Controllers;
 
-use Handytravelers\Components\Homes\Models\Request as r;
+use Handytravelers\Components\Requests\Models\Request as r;
 use Handytravelers\Components\Images\Images;
 use Handytravelers\Components\Images\Models\Image;
 use Handytravelers\Components\Places\Places;

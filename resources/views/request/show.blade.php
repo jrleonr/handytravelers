@@ -10,19 +10,9 @@
         <div class="columns">
             <div class="column  is-two-thirds">
                 <div class="box">
-                    @if($request && (!$request->isInactive() && ( $request->isPending() && $type == 'guest')  || $request->isAccepted() ) )
+                   
                         @include('request._textformInvitation')
-                    @elseif(!$request && $request->user_id !== Auth::id() )
-                        @include('request._textformRequest')
-                    @else
-                        @if($request && $request->isInactive())
-                            <p class="title is-4">This request is closed</p>
-                        @elseif($request && $request->isPending())
-                            <p class="title is-4">Waiting for the guest to anwser</p>
-                        @else
-                            <p class="title is-4">This is your request</p>
-                        @endif    
-                    @endif
+                    
                 </div>
                 <article class="message">
                     <div class="message-body">
@@ -47,7 +37,7 @@
                             </p>
                             @if($request && $request->isFromDifferentPlace())
                             <p>
-                                <strong> {{ __('Invitation To') }} </strong><br> {{$request->user->home->place->name}} ( < 40km {{$request->place->name}})
+                                <strong> {{ __('Invitation To') }} </strong><br> {{$request->place->name}}
                             </p>
                             @endif
                             <p>
@@ -88,7 +78,7 @@
 
                     @if($request)
                     @foreach($request->participants AS $participant)
-                    @if($participant->type != $request->userRole)
+                    @if($participant->type != $request->userRole($participant->user))
                     <div class="box" >
                     <a href="{{route('profile',[$participant->user->username])}}">
                     

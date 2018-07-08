@@ -26,15 +26,17 @@ Route::get('/traveler/{user}', ['as' => 'profile', 'uses' => 'LandingController@
 Route::get('/search', ['as' => 'search', 'uses' => 'SearchController@show']);
 
 //invitation
+Route::get('/inbox', ['as' => 'inbox', 'uses' => 'InboxController@show']);
+
 Route::get('/request/new/{home}', ['as' => 'request.form', 'uses' => 'RequestController@showRequestForm']);
 Route::post('/request/new', ['as' => 'request.form', 'uses' => 'RequestController@postRequestForm']);
 Route::get('/request/sent', ['as' => 'request.sent', 'uses' => 'RequestController@getRequestSent']);
 Route::get('/createCustomer/{requestId}', ['as' => 'request.showCreateCustomer', 'uses' => 'RequestController@showCreateCustomer']);
 Route::post('/createCustomer', ['as' => 'request.postCreateCustomer', 'uses' => 'RequestController@postCreateCustomer']);
-Route::get('/inbox', ['as' => 'inbox', 'uses' => 'RequestController@inbox']);
+
 Route::post('/request/invite', ['as' => 'request.invite', 'uses' => 'RequestController@sendInvite']);
-Route::get('/request/{hash}', ['as' => 'request.show', 'uses' => 'RequestController@getShowRequest']);
-Route::get('/invitation/{id}', ['as' => 'invitation.show', 'uses' => 'RequestController@show']);
+//Route::get('/request/{hash}', ['as' => 'request.show', 'uses' => 'RequestController@getShowRequest']);
+Route::get('/request/{id}', ['as' => 'request.show', 'uses' => 'RequestController@show']);
 Route::post('/invitation/create', ['as' => 'invitation.create', 'uses' => 'RequestController@postNewConversation']);
 Route::post('/invitation/add/message', ['as' => 'invitation.addMessage', 'uses' => 'RequestController@postNewMessage']);
 

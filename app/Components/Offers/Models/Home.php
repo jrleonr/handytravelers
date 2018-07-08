@@ -22,6 +22,15 @@ class Home extends Model
 
         return false;
     }
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getPlaceId()
+    {
+        return $this->place_id;
+    }
 
     public function users()
     {

@@ -57,7 +57,7 @@ class Request extends Model
             'status' => 'accepted'
         ])->save();
 
-        $this->request->deactivate();
+        $this->deactivate();
 
         $this->declineOthers();
 
@@ -217,6 +217,13 @@ class Request extends Model
             }, 'participants.user', 'request', 'messages.user'])->first();
     }
 
+    public function getRequest($uuid)
+    {
+        return static::where([
+            ['uuid', '=', $uuid]
+        ])->firstOrFail();
+    }
+
     public function declineOthers()
     {
         static::where([
@@ -297,25 +304,6 @@ class Request extends Model
         return $this->messages()->latest()->first()->body;
     }
 
-    public function isFromDifferentPlace()
-    {
-        if ($this->place_id !== $this->user->home->place_id) {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    // public function getTextByUserRole()
-    // {
-    //     if ($this->userRole == 'host' || $this->status == 'accepted') {
-    //         return trans('common.writeHereYourMessage');
-    //     } else {
-    //         return trans('common.hostHasInvitedYou');
-    //     }
-    // }
-    
     public function getTextByUserRole($type)
     {
         if ($type == 'host') {

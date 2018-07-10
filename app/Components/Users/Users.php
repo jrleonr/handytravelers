@@ -3,7 +3,7 @@
 namespace Handytravelers\Components\Users;
 
 use Auth;
-use Handytravelers\Components\Offers\Models\Home;
+use Handytravelers\Components\Homes\Models\Home;
 use Handytravelers\Components\Images\Images;
 use Handytravelers\Components\Places\Places;
 use Handytravelers\Components\Users\Exceptions\UserEmailNotFoundException;

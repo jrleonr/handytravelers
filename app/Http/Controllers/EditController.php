@@ -11,7 +11,7 @@ use Handytravelers\Components\Users\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SKAgarwal\GoogleApi\Exceptions\GooglePlacesApiException;
-use Handytravelers\Components\Homes\Homes;
+use Handytravelers\Components\Homes\Home;
 use Illuminate\Validation\Rule;
 
 

@@ -7,9 +7,8 @@ use Handytravelers\Components\Homes\Exceptions\HomeRequestInactiveException;
 use Handytravelers\Components\Requests\Exceptions\RequestHasInvitationForUserException;
 use Handytravelers\Components\Requests\Exceptions\UserCityisNotRequestedCityException;
 use Handytravelers\Components\Requests\Exceptions\UsersCantInviteThemselves;
-use Handytravelers\Components\Requests\Models\Request as RequestModel;
-use Handytravelers\Components\Offers\Models\Home;
-use Handytravelers\Components\Requests\Requests as HomeRequest;
+use Handytravelers\Components\Requests\Models\Request as HomeRequest;
+use Handytravelers\Components\Homes\Models\Home;
 use Handytravelers\Components\Images\Images;
 use Handytravelers\Components\Payments\Exceptions\UserDoesntHaveStripeTokenException;
 use Handytravelers\Components\Users\Exceptions\CityWhereUserLiveException;
@@ -44,20 +43,15 @@ class RequestController extends Controller
         $user = Auth::user();
 
         try {
-            $request = RequestModel::byIdWithRequestAndParticipants($id);
+            $request = HomeRequest::byIdWithRequestAndParticipants($id);
         } catch (ModelNotFoundException $e) {
             Session::flash('error', 'The request with ID: ' . $id . ' was not found.');
 
             return redirect()->route('inbox');
         }
        
-        //$request = $request->request;
-
         $request->userRole = $request->userRole($user);
         $type = $request->userRole;
-        if ($request->userRole == 'guest' && ! $user->stripe_id) {
-            return redirect()->route('request.showCreateCustomer', [$request->uuid])->with('error', 'Please set up to a payment to be able to anwser an request');
-        }
 
         $request->markAsRead($user->id);
 
@@ -89,32 +83,63 @@ class RequestController extends Controller
      */
     public function postRequestForm(Request $request)
     {
-        $user = Auth::user();
 
         $this->validate($request, [
-            'offer_id' => 'required',
+            'home_id' => 'required',
             'check_in' => 'required|date|date_format:Y-m-d|after:today',
             'check_out' => 'required|date|date_format:Y-m-d|after:check_in',
             'people' => 'required|integer|between:1,5',
             'body' => 'required|min:300',
         ]);
+        
+        $user = Auth::user();
+         $data = $request->all();
+        $home = Home::where('id', $data['home_id'])->first();
 
+        if(!$user->filled()) {
+            throw new ProfileNotCompletedException;
+        }
 
+        if($home->id === $user->home_id) {
+            throw new UsersCantInviteThemselves;
+        }
+
+        
 
         try {
-            $data = $request->all();
+           
 
-            $home = Home::where('id', $data['offer_id'])->first();
+            
 
             //'accepted','declined','pending','cancelled'
-            $homeRequest = new HomeRequest($user, $home);
-            $homeRequest = $homeRequest->create([
-                'offer_id' => $data['offer_id'],
+            $request = Request::create([
+                'uuid' => Uuid::uuid4(),
+                'home_id' => $home->getId(),
                 'check_in' => $data['check_in'],
                 'check_out' => $data['check_out'],
                 'people' => $data['people'],
-                'body' => $data['body']
+                'body' => $data['body'],
+                'place_id' => $home->getPlaceId(),
+                'status' => 'pending',
+                'waiting_action' => 'host',    
+                'user_id' => $user->id,
             ]);
+        
+        //event(new HomeRequested($request));
+        
+        $request->addMessage($formData['body'], $user->id);
+
+        $participants = [
+            ['user_id' => $user->id, 'type' => 'guest', 'last_read' => Carbon::now() ]
+        ];
+
+        foreach ($home->users as $user) {
+            $participants[] = ['user_id' => $user->id, 'type' => 'host', 'last_read' => null ];
+        }
+
+        $request->addParticipants($participants);
+
+        //Mail::to($request->user->email)->send(new NewRequest($request));
 
             return redirect()->route('request.sent');
 
@@ -129,75 +154,6 @@ class RequestController extends Controller
         }
     }
 
-    public function postDeleteRequest(Request $request)
-    {
-        // $request = r::where('hash', $request->input('hash'))->firstOrFail();
-
-        // if ($request->user_id != $user->id) {
-        //     return 'This requests is from another user';
-        // }
-
-        // $request->delete();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    // public function getShowRequest($id)
-    // {
-    //     $user = Auth::user();
-    
-    //     try {
-            
-    //         $request = RequestModel::where('uuid', $id)->with('user','messages')->firstOrFail();
-
-    //         //$host = User::where('username', $host)->with('home')->firstOrFail();
-
-    //         // if (!$user->home->filled() && $host->id != $user->id) {
-    //         //     return redirect()->route('edit.home')->with('error', 'To send a request you have to provide info about your home.');
-    //         // }
-    //     } catch (ModelNotFoundException $e) {
-    //         return redirect()->route('dashboard')->with('error', 'That Request is not longer available.');
-    //     }
-
-    //     $type = 'host';
-        
-
-    //     return view('request.show', compact('request', 'type'));
-    // }
-
-    public function sendInvite(Request $request)
-    {
-        $this->validate($request, [
-            'requestId' => 'required',
-            'body' => 'required'
-        ]);
-
-        try {
-            $homeRequest = new HomeRequest(Auth::user());
-
-            $request = $homeRequest->createInvitation(
-                $homeRequest->getRequest($request->input('requestId')),
-                $request->input('body')
-            );
-        } catch (UserCityisNotRequestedCityException $e) {
-            return redirect()->back()->with('error', 'You don\'t live there!');
-        } catch (HomeRequestInactiveException $e) {
-            return redirect()->route('dashboard')->with('error', 'This request is not longer available. The user cancelled or has accepted another request. Thank you for sending a request, try with a different traveler!');
-        } catch (UsersCantInviteThemselves $e) {
-            return redirect()->route('dashboard')->with('error', 'You can\'t invite yourself.');
-        } catch (RequestHasInvitationForUserException $e) {
-            return redirect()->route('dashboard')->with('error', 'You already sent an request for this request.');
-        }
-
-        return redirect()->route('request.show', ['message' => $request->uuid ]);
-    }
-
-
-
     public function postNewMessage(Request $request)
     {
         $this->validate($request, [
@@ -205,22 +161,55 @@ class RequestController extends Controller
             'requestId' => 'required'
         ]);
 
-        $request = RequestModel::where('uuid', $request->input('requestId'))->firstOrFail();
+        $homeRequest = HomeRequest::where('uuid', $request->input('requestId'))->firstOrFail();
 
         try {
-            $homeRequest = new HomeRequest(Auth::user());
 
-            $homeRequest->responseRequest(
-                $request,
-                request(['accept', 'decline', 'cancel', 'body'])
-            );
-        } catch (UserDoesntHaveStripeTokenException $e) {
-            return redirect()->route('request.showCreateCustomer', ['requestId' => $request->uuid])->with('error', "Add a credit card, please.");
-        } catch (\Exception $e) {
-            return redirect()->route('request.show', [$request->uuid])->with('error', $e->getMessage());
+            $formData = request(['accept', 'decline', 'cancel', 'body']);
+
+                   //check if the requests is decline or cancelled, and dont let do anything else
+        if($homeRequest->isInactive()) {
+            throw new \Exception("You are not allow to anwser this request because is close");
+        }
+
+        $homeRequest->isParticipant($user);
+
+        $mail = NewMessage::class;
+
+        if( isset($formData['accept']) || isset($formData['decline']) ) {
+
+            if ( $homeRequest->isHost($user)){
+                throw new HostsCannotAnswerRequestException;
+            }
+
+            if(isset($formData['accept'])) {
+                $homeRequest->accept($user);
+                $mail = Accepted::class;
+            } else {
+                $homeRequest->decline();
+                $mail = Declined::class;
+
+            }
+        } 
+
+        if( isset($formData['cancel']) ) {
+            $homeRequest->cancel();
+            $mail = Cancelled::class;
         }
 
 
-        return Redirect::route('request.show', [$request->uuid]);
+        $homeRequest->addMessage($formData['body'], $user->id);
+        //Mail::to($homeRequest->getUsersWithoutMe($user))->send(new $mail($homeRequest, $user));
+
+
+
+        } catch (UserDoesntHaveStripeTokenException $e) {
+            return redirect()->route('request.showCreateCustomer', ['requestId' => $homeRequest->uuid])->with('error', "Add a credit card, please.");
+        } catch (\Exception $e) {
+            return redirect()->route('request.show', [$homeRequest->uuid])->with('error', $e->getMessage());
+        }
+
+
+        return Redirect::route('request.show', [$homeRequest->uuid]);
     }
 }

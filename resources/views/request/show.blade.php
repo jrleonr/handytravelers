@@ -35,11 +35,6 @@
                             <p>
                                 <strong> {{ trans('common.destination') }} </strong><br> {{$request->place->name}}
                             </p>
-                            @if($request && $request->isFromDifferentPlace())
-                            <p>
-                                <strong> {{ __('Invitation To') }} </strong><br> {{$request->place->name}}
-                            </p>
-                            @endif
                             <p>
                                 <strong> {{ trans('common.from') }} </strong><br> {{$request->check_in->format('l jS \\of F')}}
                             </p>

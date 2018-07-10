@@ -3,7 +3,7 @@
 namespace Handytravelers\Components\Users\Models;
 
 use Carbon\Carbon;
-use Handytravelers\Components\Offers\Models\Home;
+use Handytravelers\Components\Homes\Models\Home;
 use Handytravelers\Components\Requests\Models\Request;
 use Handytravelers\Components\Images\Models\Image;
 use Handytravelers\Components\Payments\Models\Payment;

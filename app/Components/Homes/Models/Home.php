@@ -1,6 +1,6 @@
 <?php
 
-namespace Handytravelers\Components\Offers\Models;
+namespace Handytravelers\Components\Homes\Models;
 
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;

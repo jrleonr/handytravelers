@@ -46,7 +46,7 @@ class EditController extends Controller
         $user->placeName = Places::getPlaceFullName($user->from);
         $home->placeName = Places::getPlaceFullName($home->place);
 
-        if (!$user->filled()) {
+        if (!$user->isFilled()) {
             return view('wizard.profile', ['user' => $user, 'languages' => Language::all(), 'home' => $home ]);
         }
 
@@ -187,7 +187,7 @@ class EditController extends Controller
 
         $user->home->placeName = Places::getPlaceFullName($user->home->place);
 
-        if (!$user->home->filled()) {
+        if (!$user->home->isFilled()) {
             return view('wizard.home', ['home' => $user->home]);
         }
 

@@ -188,9 +188,4 @@ class User extends Authenticatable
         return $this->hasMany(Request::class);
     }
 
-    // public function invitations()
-    // {
-    //     //return $this->hasMany(Request::class, 'sent_by');
-    //     return $this->request();
-    // }
 }

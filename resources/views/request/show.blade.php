@@ -10,9 +10,7 @@
         <div class="columns">
             <div class="column  is-two-thirds">
                 <div class="box">
-                   
-                        @include('request._textformInvitation')
-                    
+                    @include('request._textformInvitation')
                 </div>
                 <article class="message">
                     <div class="message-body">
@@ -20,10 +18,8 @@
                         <p class="subtitle is-6">  {{ trans('common.readProfilesCarefully') }} </p>
                     </div>
                 </article>
-                @if($request)
+                
                     @include('request._message', ['messages' => $request->messages])
-                @endif
-                @include('request._message', ['messages' => [$request]])
             </div>
             <div id="aside" class="column  is-offset-1  ">
                 <div class="message">

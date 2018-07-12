@@ -7,9 +7,7 @@
 
 require('./bootstrap');
 
-import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import InstantSearch from 'vue-instantsearch';
-
 
 window.Vue = require('vue');
 
@@ -22,18 +20,22 @@ Vue.use(InstantSearch);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('scan-view', require('./views/scan-view.vue'));
+ Vue.component('Modal', require('./components/bulma/Modal.vue'));
+
 
 
 const app = new Vue({
     el: '#app',
-    components: {
 
-    VueGoogleAutocomplete
-  },
+
+
           data: function () {
             return {
+                showCancelModal: false,
+        showHelpAcceptModal: false,
+        formSent: false,
+        showLanguagesModal: false,
               address: ''
             }
         },
@@ -41,7 +43,7 @@ const app = new Vue({
         mounted() {
             // To demonstrate functionality of exposed component functions
             // Here we make focus on the user input
-            this.$refs.address.focus();
+            //this.$refs.address.focus();
         },
 
         methods: {
@@ -51,8 +53,40 @@ const app = new Vue({
             * @param {Object} placeResultData PlaceResult object
             * @param {String} id Input container ID
             */
-            getAddressData: function (addressData, placeResultData, id) {
-                this.address = addressData;
-            }
+            // getAddressData: function (addressData, placeResultData, id) {
+            //     this.address = addressData;
+            // }
         }
 });
+
+//find a better place and better solution
+import autosize from 'autosize';
+autosize($('textarea'));
+
+require('jquery-datepicker');
+require('blueimp-file-upload');
+
+
+    $('.modal-body input').click(function() {
+        setLanguages();
+    });
+
+    $(document).ready( function() {
+      setLanguages();
+  });
+
+    function setLanguages()
+    {
+        var languages = '';
+
+        var type = $('.modal-body input:checkbox').map(function(){
+            return this.checked ? this.value : [];
+        }).get();
+
+        type.forEach( function(element) {
+            languages = languages + element + ', ';
+        });
+
+        $("#spokenLanguages").html(languages.replace(/,\s*$/, ""));
+
+    }

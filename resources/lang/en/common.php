@@ -159,9 +159,10 @@ return [
     'date modified' => 'Date was modified',
     
     'destination' => 'Destination',
-    'accept' => 'Pay :price to Accept',
+    'accept' => 'Accept this Request',
     'decline' => 'Decline',
     'confirm' => 'Confirm',
+    'cancelRequest' => 'Cancel Request',
     
     'sendRequestTo' => 'Request to Stay with',
     'requestToStay' => 'Request to stay',

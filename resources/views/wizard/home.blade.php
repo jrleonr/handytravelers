@@ -31,6 +31,4 @@
     </div>
 </section>
 @endsection
-@section('javascript')
-@include('edit._js')
-@endsection
+

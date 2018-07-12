@@ -12,7 +12,7 @@ class Participant extends Model
      *
      * @var array
      */
-    protected $fillable = ['request_id', 'user_id', 'last_read'];
+    protected $fillable = ['request_id', 'user_id', 'role', 'last_read'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -40,6 +40,11 @@ class Participant extends Model
     {
         return $this->belongsTo(User::class);
     }    
+
+    public function scopeUserRole($query, $userId)
+    {
+        return $query->where('user_id', '=', $userId)->first()->role;
+    }
 
     public function scopeWithoutUser($query, $user)
     {

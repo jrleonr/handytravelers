@@ -54,3 +54,12 @@ Route::post('/edit/photos', ['as' => 'edit.photos', 'uses' => 'EditController@po
 Route::put('/edit/photos', ['as' => 'edit.photos', 'uses' => 'EditController@editPhotos']);
 Route::delete('/edit/photos', ['as' => 'edit.photos', 'uses' => 'EditController@deletePhotos']);
 Route::get('/edit/payment', ['as' => 'edit.payment', 'uses' => 'EditController@getPayment']);
+
+//places
+Route::get('places/', ['as' => 'places.list', 'uses' => 'PlacesController@getAllCountries']);
+Route::get('{place}/', ['as' => 'places.country', 'uses' => 'PlacesController@getCountryOrContinent']);
+Route::get('{country}/{place}', ['as' => 'places.city', 'uses' => 'PlacesController@getCity']);
+
+
+
+

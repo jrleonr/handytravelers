@@ -31,10 +31,6 @@ class LandingController extends Controller
      */
     public function getIndex()
     {
-        if (Auth::check()) {
-            return redirect('/dashboard');
-        }
-
         return view('landings.home');
     }
 

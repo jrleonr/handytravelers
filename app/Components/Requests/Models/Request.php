@@ -19,31 +19,10 @@ class Request extends Model
 
     protected $dates = ['check_in', 'check_out'];
 
-    public function deactivate()
-    {
-        $this->forceFill([
-            'active' => 0
-        ])->save();
-    }
-
-    public function activate()
-    {
-        $this->forceFill([
-            'active' => 1
-        ])->save();
-    }
-
-    public function isActive()
-    {
-        return $this->active === 1;
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    
 
     public function isAPreviousInvitation($user_id)
     {
@@ -54,12 +33,9 @@ class Request extends Model
     public function accept(User $user)
     {
         $this->forceFill([
-            'status' => 'accepted'
+            'status' => 'accepted',
+            'waiting_action' => null
         ])->save();
-
-        $this->deactivate();
-
-        $this->declineOthers();
 
         return true;
     }
@@ -71,10 +47,22 @@ class Request extends Model
     public function decline()
     {
         $this->forceFill([
-            'status' => 'declined'
+            'status' => 'declined',
+            'waiting_action' => null
         ])->save();
     }
 
+    /**
+     * Close the invitation
+     * 
+     */
+    public function close()
+    {
+        $this->forceFill([
+            'status' => 'closed',
+            'waiting_action' => null
+        ])->save();
+    }
 
     /**
      * Decline the invitation
@@ -83,7 +71,8 @@ class Request extends Model
     public function cancel()
     {
         $this->forceFill([
-            'status' => 'cancelled'
+            'status' => 'cancelled',
+            'waiting_action' => null
         ])->save();
     }
 
@@ -140,9 +129,17 @@ class Request extends Model
         return false;
     }
 
+
+    public function isActive()
+    {
+        if ($this->status == 'pending' || $this->status == 'accepted' || $this->status == 'declined') {
+            return true;
+        }
+    }
+
     public function isInactive()
     {
-        if ($this->status == 'declined' || $this->status == 'cancelled') {
+        if ($this->status == 'closed' || $this->status == 'cancelled') {
             return true;
         }
 
@@ -198,6 +195,11 @@ class Request extends Model
         return false;
     }
 
+    public function waitingActionFor()
+    {
+        return $this->waiting_action;
+    }
+
     /**
      * Check if the user guest/host depending on his/her homeId
      *
@@ -205,7 +207,7 @@ class Request extends Model
      */
     public function userRole(User $user)
     {
-        return ($user->home_id === User::getHomeId($this->user_id)) ? 'host' : 'guest';
+        return $this->participants()->userRole($user->id);
     }
 
 

@@ -12,6 +12,4 @@
     </div>
     </section>
     @stop
-    @section('javascript')
-    @include('edit._js')
-    @stop
+  

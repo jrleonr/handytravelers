@@ -4,13 +4,14 @@ namespace Handytravelers\Http\Controllers;
 
 use Carbon\Carbon;
 use Handytravelers\Components\Homes\Exceptions\HomeRequestInactiveException;
+use Handytravelers\Components\Homes\Models\Home;
+use Handytravelers\Components\Images\Images;
+use Handytravelers\Components\Payments\Exceptions\UserDoesntHaveStripeTokenException;
+use Handytravelers\Components\Requests\Exceptions\GuestsCannotAnswerRequestException;
 use Handytravelers\Components\Requests\Exceptions\RequestHasInvitationForUserException;
 use Handytravelers\Components\Requests\Exceptions\UserCityisNotRequestedCityException;
 use Handytravelers\Components\Requests\Exceptions\UsersCantInviteThemselves;
 use Handytravelers\Components\Requests\Models\Request as HomeRequest;
-use Handytravelers\Components\Homes\Models\Home;
-use Handytravelers\Components\Images\Images;
-use Handytravelers\Components\Payments\Exceptions\UserDoesntHaveStripeTokenException;
 use Handytravelers\Components\Users\Exceptions\CityWhereUserLiveException;
 use Handytravelers\Components\Users\Exceptions\ProfileNotCompletedException;
 use Handytravelers\Components\Users\Models\User;
@@ -107,12 +108,9 @@ class RequestController extends Controller
         
 
         try {
-           
-
-            
 
             //'accepted','declined','pending','cancelled'
-            $request = Request::create([
+            $request = HomeRequest::create([
                 'uuid' => Uuid::uuid4(),
                 'home_id' => $home->getId(),
                 'check_in' => $data['check_in'],
@@ -127,21 +125,21 @@ class RequestController extends Controller
         
         //event(new HomeRequested($request));
         
-        $request->addMessage($formData['body'], $user->id);
+        $request->addMessage($data['body'], $user->id);
 
         $participants = [
-            ['user_id' => $user->id, 'type' => 'guest', 'last_read' => Carbon::now() ]
+            ['user_id' => $user->id, 'role' => 'guest', 'last_read' => Carbon::now() ]
         ];
 
         foreach ($home->users as $user) {
-            $participants[] = ['user_id' => $user->id, 'type' => 'host', 'last_read' => null ];
+            $participants[] = ['user_id' => $user->id, 'role' => 'host', 'last_read' => null ];
         }
 
         $request->addParticipants($participants);
 
         //Mail::to($request->user->email)->send(new NewRequest($request));
 
-            return redirect()->route('request.sent');
+            return redirect()->route('request.show', ['id' => $request->uuid] );
 
             ///return redirect()->route('request.showCreateCustomer', ['requestId' => $homeRequest->uuid]);
         } catch (CityWhereUserLiveException $e) {
@@ -156,16 +154,18 @@ class RequestController extends Controller
 
     public function postNewMessage(Request $request)
     {
+        
         $this->validate($request, [
             'body' => 'required',
             'requestId' => 'required'
         ]);
 
+        $user = Auth::user();
         $homeRequest = HomeRequest::where('uuid', $request->input('requestId'))->firstOrFail();
 
         try {
 
-            $formData = request(['accept', 'decline', 'cancel', 'body']);
+            $data = request(['accept', 'decline', 'cancel', 'body']);
 
                    //check if the requests is decline or cancelled, and dont let do anything else
         if($homeRequest->isInactive()) {
@@ -176,13 +176,13 @@ class RequestController extends Controller
 
         $mail = NewMessage::class;
 
-        if( isset($formData['accept']) || isset($formData['decline']) ) {
+        if( isset($data['accept']) || isset($data['decline']) ) {
 
-            if ( $homeRequest->isHost($user)){
-                throw new HostsCannotAnswerRequestException;
+            if ( $homeRequest->isGuest($user)){
+                throw new GuestsCannotAnswerRequestException("You can't do that");
             }
 
-            if(isset($formData['accept'])) {
+            if(isset($data['accept'])) {
                 $homeRequest->accept($user);
                 $mail = Accepted::class;
             } else {
@@ -192,13 +192,13 @@ class RequestController extends Controller
             }
         } 
 
-        if( isset($formData['cancel']) ) {
+        if( isset($data['cancel']) ) {
             $homeRequest->cancel();
             $mail = Cancelled::class;
         }
 
 
-        $homeRequest->addMessage($formData['body'], $user->id);
+        $homeRequest->addMessage($data['body'], $user->id);
         //Mail::to($homeRequest->getUsersWithoutMe($user))->send(new $mail($homeRequest, $user));
 
 

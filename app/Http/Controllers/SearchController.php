@@ -24,6 +24,7 @@ class SearchController extends Controller
     public function show(Request $request)
     {
         $query = $request->get('q');
+
         return view('search.show', compact('query'));
     }
 

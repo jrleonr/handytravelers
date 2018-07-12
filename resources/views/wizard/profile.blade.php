@@ -72,7 +72,6 @@
 </section>
 @endsection
 @section('javascript')
-@include('edit._js')
 <script type="text/javascript">
 $( function() {
 $( "#dateOfBirth" ).datepicker({

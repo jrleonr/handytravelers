@@ -77,7 +77,6 @@
     @stop
     @section('javascript')
     <script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
-    @include('edit._js')
     <script type="text/javascript">
         $( function() {
             $( "#dateOfBirth" ).datepicker({

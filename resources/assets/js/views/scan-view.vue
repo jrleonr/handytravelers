@@ -1,6 +1,13 @@
 <template>
 	<div>
-		  <ais-index app-id="KQV8NDRJ2H" api-key="9a84f12fd03268c48a48aaf180a4e9fb" index-name="homes">
+		  <ais-index 
+		  	app-id="KQV8NDRJ2H" 
+		  	api-key="9a84f12fd03268c48a48aaf180a4e9fb" 
+		  	index-name="homes"
+		  	:query-parameters="{
+             query: query,
+           }"
+		  	>
 		  	<div class="columns">
 		  		<div class="sidebar column is-4 pl-2">
 		  			<ul>
@@ -82,6 +89,7 @@
 </template>
 <script>
   export default {
+  	props: ['query'],
     methods: {
       onPageChange(page) {
         window.scrollTo(0,0);

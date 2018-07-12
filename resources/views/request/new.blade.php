@@ -101,6 +101,5 @@
 </section>
 @stop
 @section('javascript')
-@include('edit._js')
 <script src="{{ asset('js/datepicker.js') }}" defer></script>
 @stop

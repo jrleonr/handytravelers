@@ -20,9 +20,9 @@
 
     <!-- Scripts -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <script src="{{ mix('/js/app.js') }}" defer></script>
-    @yield('javascript')
-    <script async defer src="https://maps.googleapis.com/maps/api/js?&v=3&key={{ env('GOOGLE_API_KEY_WEB') }}&libraries=places&language=en"></script>
+    
+    
+    
 
     <!-- Metas -->
     <title>@yield('title', trans('common.stayWithLocalsMeta')) - Handytravelers</title>
@@ -95,6 +95,7 @@
     <script type="text/javascript">
       Stripe.setPublishableKey('{{ config('services.stripe.key') }}');
     </script>
-    
+    <script src="{{ mix('/js/app.js') }}"></script>
+    @yield('javascript') 
   </body>
 </html>

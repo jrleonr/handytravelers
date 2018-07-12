@@ -8,7 +8,14 @@
         <div class="container has-text-centered">
             <h1 class="title is-1">{{trans('common.titleHome')}}</h1>
             <h2 class="subtitle is-3">{{trans('common.subTitleHome')}}</h2>
-            @include('search/search-box')
+            <form action="{{ route('search') }}" method="get">
+                <div class="field">
+                  <div class="control">
+                    <input type="search" id="query" name="q" class="input" placeholder="Where are we going?" />
+                  </div>
+                </div>
+            
+            </form>
         </div>
     </div>
     <div class="hero-footer">
@@ -54,4 +61,26 @@
         </div>
     </div>
 </section>
+
 @stop
+
+@section('javascript')
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.7.3"></script>
+<script>
+(function() {
+  var placesAutocomplete = places({
+    container: document.querySelector('#query')
+  });
+
+  var $query = document.querySelector('#query-value')
+  placesAutocomplete.on('change', function(e) {
+    $query.textContent = e.suggestion.value 
+  });
+
+  placesAutocomplete.on('clear', function() {
+    $query.textContent = 'none';
+  });
+
+})();
+</script>
+@endsection

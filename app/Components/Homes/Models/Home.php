@@ -13,7 +13,7 @@ class Home extends Model
 
     protected $guarded = [];
 
-    public function filled()
+    public function isFilled()
     {
         if($this->summary)
         {
@@ -22,6 +22,12 @@ class Home extends Model
 
         return false;
     }
+
+    public function shouldBeSearchable()
+    {
+        return $this->isFilled();
+    }
+
     public function getId()
     {
         return $this->id;

@@ -6,6 +6,7 @@
                 <ul>
                     <li><a href="{{route('about')}}">{{ trans('common.about') }}</a></li>
                     <li><a href="{{route('how-it-works')}}">{{ trans('common.how-it-works') }}</a></li>
+                    <li><a href="{{route('places.list')}}">{{ trans('common.places') }}</a></li>
                 </ul>
             </div>
             <div class="column">

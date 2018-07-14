@@ -2,7 +2,9 @@
 
 namespace Handytravelers\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Horizon::auth(function ($request) {
+            if (Auth::check() && Auth::user()->admin) {
+                return true;
+            }
+            return false;
+        });
     }
 
     /**

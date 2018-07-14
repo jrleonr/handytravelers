@@ -34,30 +34,6 @@
             </div>
             
 
-            <div class="column">
-
-                {{-- @if(count($requests) > 0)
-                <p class="title is-3">{{ __('Travelers looking for a Host in your City') }}</p>
-                <div class="columns  is-multiline is-mobile">
-                    @foreach($requests AS $request)
-                    @include('request.card', ['request' => $request])
-                    @endforeach
-                </div>
-                @endif --}}
-                
-                @if(count($myRequests) > 0)
-                <p class="title is-3">{{ __('Your requests') }}</p>
-                <p class="subtitle is-6">{{ __('These are the request you have sent') }}</p>
-                <div class="columns  is-multiline is-mobile">
-                    
-                    @foreach($myRequests AS $request)
-                    @include('request.card', ['request' => $request, 'hideImages' => true])
-                    @endforeach
-                    
-                </div>
-                @endif
-
-            </div>
             
         </div>
     </section>

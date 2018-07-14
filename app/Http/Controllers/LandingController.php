@@ -133,24 +133,24 @@ class LandingController extends Controller
         $user = Auth::user();
 
         $home = $user->home;
-        $requests = null;
+        // $requests = null;
         
-        if ($home->place_id) {
-            $places = Place::getPlacesAround($home->place_id)->pluck('id');
+        // if ($home->place_id) {
+        //     $places = Place::getPlacesAround($home->place_id)->pluck('id');
 
-            $requests = r::whereIn('place_id', $places)
-            ->where('check_in', '>=', Carbon::now()->startOfDay())
-            ->with('user.images')->whereDoesntHave('invitations', function ($query) use ($user) {
-                $query->where('sent_by', '=', $user->id);
-            })->where('active', 1)->get();
-        }
+        //     $requests = r::whereIn('place_id', $places)
+        //     ->where('check_in', '>=', Carbon::now()->startOfDay())
+        //     ->with('user.images')->whereDoesntHave('invitations', function ($query) use ($user) {
+        //         $query->where('sent_by', '=', $user->id);
+        //     })->where('active', 1)->get();
+        // }
 
-        $myRequests = r::where([
-            ['user_id', '=', $user->id],
-            ['check_in', '>=', Carbon::now()->startOfDay()],
-            ['active', 1]
-        ])->get();
+        // $myRequests = r::where([
+        //     ['user_id', '=', $user->id],
+        //     ['check_in', '>=', Carbon::now()->startOfDay()],
+        //     ['active', 1]
+        // ])->get();
 
-        return view('landings.dashboard', compact('user', 'home', 'housemateRequests', 'requests', 'myRequests'));
+        return view('landings.dashboard', compact('user', 'home'));
     }
 }

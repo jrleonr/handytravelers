@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6,8 +5,11 @@
  */
 
 require('./bootstrap');
+require('blueimp-file-upload');
 
 import InstantSearch from 'vue-instantsearch';
+import VueGoogleAutocomplete from 'vue-google-autocomplete';
+import autosize from 'autosize';
 
 window.Vue = require('vue');
 
@@ -21,72 +23,78 @@ Vue.use(InstantSearch);
  */
 
 Vue.component('scan-view', require('./views/scan-view.vue'));
- Vue.component('Modal', require('./components/bulma/Modal.vue'));
-
+Vue.component('Modal', require('./components/bulma/Modal.vue'));
 
 
 const app = new Vue({
     el: '#app',
 
 
-
-          data: function () {
-            return {
-                showCancelModal: false,
-        showHelpAcceptModal: false,
-        formSent: false,
-        showLanguagesModal: false,
-              address: ''
-            }
-        },
-
-        mounted() {
-            // To demonstrate functionality of exposed component functions
-            // Here we make focus on the user input
-            //this.$refs.address.focus();
-        },
-
-        methods: {
-            /**
-            * When the location found
-            * @param {Object} addressData Data of the found location
-            * @param {Object} placeResultData PlaceResult object
-            * @param {String} id Input container ID
-            */
-            // getAddressData: function (addressData, placeResultData, id) {
-            //     this.address = addressData;
-            // }
+    components: { VueGoogleAutocomplete },
+    data: function() {
+        return {
+            showCancelModal: false,
+            showHelpAcceptModal: false,
+            formSent: false,
+            showLanguagesModal: false,
         }
+    }
 });
 
-//find a better place and better solution
-import autosize from 'autosize';
+
 autosize($('textarea'));
 
-require('jquery-datepicker');
-require('blueimp-file-upload');
 
+$('.modal-body input').click(function() {
+    setLanguages();
+});
 
-    $('.modal-body input').click(function() {
-        setLanguages();
+function setLanguages() {
+    var languages = '';
+
+    var type = $('.modal-body input:checkbox').map(function() {
+        return this.checked ? this.value : [];
+    }).get();
+
+    type.forEach(function(element) {
+        languages = languages + element + ', ';
     });
 
-    $(document).ready( function() {
-      setLanguages();
-  });
+    $("#spokenLanguages").html(languages.replace(/,\s*$/, ""));
 
-    function setLanguages()
-    {
-        var languages = '';
+}
 
-        var type = $('.modal-body input:checkbox').map(function(){
-            return this.checked ? this.value : [];
-        }).get();
 
-        type.forEach( function(element) {
-            languages = languages + element + ', ';
+$('.modal-body input').click(function() {
+    setLanguages();
+});
+
+$(document).ready(function() {
+    setLanguages();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Get all "navbar-burger" elements
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
         });
-
-        $("#spokenLanguages").html(languages.replace(/,\s*$/, ""));
-
     }
+
+});

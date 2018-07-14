@@ -15,7 +15,8 @@ class CreateHomesTable extends Migration
     {
         Schema::create('homes', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', ['male','female', 'couple', 'group', 'family'])->index()->nullable();
+            //['male','female', 'couple', 'group', 'family']
+            $table->string('type')->index()->nullable();
             $table->text('summary')->nullable();
             $table->text('rules')->nullable();
             $table->text('interaction')->nullable();

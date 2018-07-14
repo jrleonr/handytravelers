@@ -38,7 +38,7 @@ return [
     'city' => 'City',
     'notNow' => 'Not now',
     'turnStrangersIntoFriends' => 'Turn Strangers into Friends',
-    'writeHereYourMessage' => 'Write here your message',
+    'writeHereYourMessage' => 'Write here your message...',
 
 
     //DOW
@@ -73,7 +73,7 @@ return [
 
     'workExchange' => 'Work Exchange',
     'titleHome' => 'Live the dream of being from everywhere',
-    'subTitleHome' => 'Share your travel and stay with local people.',
+    'subTitleHome' => 'Find a couch.Surf for locals. Stay with a local',
     'continueWithFacebook' => 'Continue with Facebook',
     'signUpWithEmail' => 'Sign up with Email',
     'whereAreYouFrom' => 'Where are you from?',

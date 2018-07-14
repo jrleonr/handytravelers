@@ -20,8 +20,7 @@
 
     <!-- Scripts -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    
-    
+    <script src="https://maps.googleapis.com/maps/api/js?&v=3&key={{ env('GOOGLE_API_KEY_WEB') }}&libraries=places&language=en"></script>
     
 
     <!-- Metas -->
@@ -91,10 +90,6 @@
     </div>
     @include('includes.footer')
     <!-- Scripts -->
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript">
-      Stripe.setPublishableKey('{{ config('services.stripe.key') }}');
-    </script>
     <script src="{{ mix('/js/app.js') }}"></script>
     @yield('javascript') 
   </body>

@@ -31,6 +31,13 @@ class User extends Authenticatable
 
     protected $dates = ['date_of_birth'];
 
+    /**
+     * The relationships that should be touched on save.
+     *
+     * @var array
+     */
+    protected $touches = ['home'];
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -46,7 +53,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $visible = ['first_name', 'gender', 'uuid'];
+    protected $visible = ['first_name', 'gender', 'username'];
 
     /**
      * The accessors to append to the model's array form.
@@ -131,7 +138,7 @@ class User extends Authenticatable
         return true;
     }
 
-    public function filled()
+    public function isFilled()
     {
         if ($this->about && $this->date_of_birth && $this->place_id && $this->last_name) {
             return true;
@@ -186,6 +193,17 @@ class User extends Authenticatable
     public function requests()
     {
         return $this->hasMany(Request::class);
+    }
+    public function toArray()
+    {
+        return [
+            'username' => $this->username,
+            'first_name' => $this->first_name,
+            'image' => $this->getMainPhoto(300),
+            'gender' => $this->gender,
+            //timestamp 'date_of_birth' => $this->date_of_birth,
+            'languages' => $this->languages->pluck('title'),
+        ];
     }
 
 }

@@ -41,12 +41,33 @@
                 <label for="from" class=" label">{{__('edit.whereAreYouFrom')}}</label>
                             
                 <p class="control">
-                    <input type="text" class="input" name="from" id="from" value="{{$user->placeName}}">
+                    <vue-google-autocomplete 
+                    id="from" 
+                    type="text" 
+                    types="(cities)"
+                    class="input" 
+                    ref="address" 
+                    v-on:placechanged="getAddressData" 
+                    name="from" id="from" 
+                    autocomplete="off"
+                    value="{{$user->placeName}}">
+                    </vue-google-autocomplete>
                 </p>
+
                 
                 <label for="live" class=" label">{{__("What city do you live in?")}}</label>
                 <p class="control">
-                    <input type="text" class="input" name="live" id="live" value="{{ $home->placeName }}">
+                    <vue-google-autocomplete 
+                    type="text" 
+                    types="(cities)"
+                    class="input" 
+                    name="live"
+                    id="live" 
+                    ref="address" 
+                    autocomplete="off"
+                    v-on:placechanged="getAddressData" 
+                    value="{{ $home->placeName }}">
+                    </vue-google-autocomplete>
                 </p>
 
                 

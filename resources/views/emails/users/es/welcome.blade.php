@@ -49,7 +49,7 @@ Cómo funciona
 
 PD.  Si quieres ponerte en contacto conmigo no tienes nada más que contestar a este email.
 
-PD2. También puedes conectar conmigo siguiéndome en mi cuenta de Instagram en <a href="https://www.instagram.com/jrleonr/"> @jrleonr </a>
+
 
 Gracias.
 

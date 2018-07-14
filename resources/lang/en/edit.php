@@ -44,7 +44,7 @@ return [
     'passwordConfirmation' => 'Password Confirmation',
 
     'youHaveCompleteProfile' => 'You have completed your profile',
-    'youHaveCompleteProfileDes' => 'Would you like to complete the info of your place to be able to invite travelers into your home or would you prefer to send a request and start traveling now?',
+    'youHaveCompleteProfileDes' => 'Would you like to complete the info of your place to be able to invite travelers into your home or would you prefer to start browsing travellers now?',
 
     'completeYourhomeInfo' => 'Edit my Home',
     'sendFirstRequest' => 'Send my First Request',

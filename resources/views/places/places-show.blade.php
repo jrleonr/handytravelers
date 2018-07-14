@@ -25,8 +25,8 @@
                             <div class="user-list-details card">
                                 <div class="card-image">
                                     <figure class="image ">
-                                        <a class="title is-4"  href="{{route('profile' ,$home['users']['username']) }}" >
-                                            <img src="{{ $home['users']['image'] }}">
+                                        <a class="title is-4"  href="{{route('profile' ,$home['users'][0]['username']) }}" >
+                                            <img src="{{ $home['users'][0]['image'] }}">
                                         </a>
                                         
                                     </figure>
@@ -35,7 +35,7 @@
                                     <div class="media">
                                         
                                         <div class="media-content">
-                                            <a class="title is-4" href="{{route('profile' ,$home['users']['username']) }}">{{ $home['users']['first_name'] }}</a>
+                                            <a class="title is-4" href="{{route('profile' ,$home['users'][0]['username']) }}">{{ $home['users'][0]['first_name'] }}</a>
                                         </div>
                                         
                                     </div>

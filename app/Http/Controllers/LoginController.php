@@ -121,7 +121,7 @@ class LoginController extends Controller
 
     protected function redirectUserTo($user)
     {
-        if (!$user->filled()) {
+        if (!$user->isFilled()) {
             return redirect(route('edit.profile'));
         }
 

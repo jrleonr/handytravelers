@@ -95,6 +95,7 @@ class Request extends Model
             $this->participants()->create([
                 'user_id' => $participant['user_id'],
                 'last_read' => $participant['last_read'],
+                'role' => $participant['role'],
             ]);
         });
     }
@@ -288,7 +289,7 @@ class Request extends Model
 
     public function placeName()
     {
-        return $this->place()->name;
+        return $this->place->name;
     }
 
     /**
@@ -308,10 +309,10 @@ class Request extends Model
 
     public function getTextByUserRole($type)
     {
-        if ($type == 'host') {
+        if ($type == 'guest') {
             return trans('common.writeHereYourMessage');
         } else {
-            return trans('common.hostHasInvitedYou');
+            return trans('common.writeHereYourMessage');
         }
     }
 }

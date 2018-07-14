@@ -21,12 +21,23 @@
 		  					<ais-search-box :autofocus="true" placeholder="Barcelona"></ais-search-box>
 		  				</li>
 
+		  				
+		  				
+
+		  				
 		  				<li class="filterable-item">
-		  					<ais-refinement-list attribute-name="country" :sort-by="['count:desc']"></ais-refinement-list>
+		  					
+		  					<ais-refinement-list attribute-name="type">
+		  						<h4 slot="header">Type</h4>
+		  					</ais-refinement-list>
 		  				</li>
 
+
 		  				<li class="filterable-item">
-		  					<ais-refinement-list attribute-name="type"></ais-refinement-list>
+		  					
+		  					<ais-refinement-list attribute-name="users.languages" :sort-by="['count:desc']">
+		  						<h4 slot="header">Languages</h4>
+		  					</ais-refinement-list>
 		  				</li>
 
 		  			</ul>
@@ -42,8 +53,8 @@
 		  			    					<div class="user-list-details card">
 		  			    						<div class="card-image">
 													<figure class="image ">
-														<a class="title is-4" :href=" '/traveler/' + result.users.username"	>
-															<img :src=" result.users.image ">
+														<a class="title is-4" :href=" '/traveler/' + result.users[0].username"	>
+															<img :src=" result.users[0].image ">
 														</a>
 												    	
 												    </figure>
@@ -52,7 +63,7 @@
 												    <div class="media">
 												      
 												      <div class="media-content">
-												        <a class="title is-4" :href=" '/traveler/' + result.users.username" v-text="result.users.first_name"></a>
+												        <a class="title is-4" :href=" '/traveler/' + result.users[0].username" v-text="result.users[0].first_name"></a>
 												      </div>
 
 												    

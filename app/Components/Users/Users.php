@@ -7,7 +7,6 @@ use Handytravelers\Components\Homes\Models\Home;
 use Handytravelers\Components\Images\Images;
 use Handytravelers\Components\Places\Places;
 use Handytravelers\Components\Users\Exceptions\UserEmailNotFoundException;
-use Handytravelers\Components\Users\Exceptions\UserIsNotVerifiedOnFacebookException;
 use Handytravelers\Components\Users\Exceptions\UserIsNotVerifyException;
 use Handytravelers\Components\Users\Models\User;
 use Handytravelers\Notifications\ConfirmUserEmail;
@@ -36,7 +35,6 @@ class Users
         }
 
         if (!$user) {
-
             $user  = [
                 'facebook_id' => $attributes['id'],
                 'first_name' => $attributes['first_name'],
@@ -48,7 +46,6 @@ class Users
                 'locale' => $attributes['locale'] ?? null,
                 'verified' => (!isset($attributes['email'])) ? 0 : 1
             ];
-
             
             if (isset($attributes['location'])) {
                 try {
@@ -116,7 +113,7 @@ class Users
             'place_id' => $attributes['hometown'] ?? null,
             'timezone' => $attributes['timezone'],
             'locale' => $attributes['locale'],
-            'verified' => $attributes['verified'],
+            'verified' => $attributes['verified']
         ]);
 
         $home = Home::create([
@@ -126,13 +123,13 @@ class Users
         $user->home_id = $home->id;
         $user->save();
 
-        if ($attributes['verified']) {
-            $user->notify(new UserRegistered());
-        }
+        $user->notify(new UserRegistered());
 
         return $user;
     }
 
+
+    //verify email to check
     public function sendToken($email)
     {
         $user = User::where('username', session()->pull('verify.user_id'))->firstOrFail();

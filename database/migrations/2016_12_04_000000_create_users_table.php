@@ -23,11 +23,10 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->text('about')->nullable();
             $table->date('date_of_birth')->nullable();
-            $table->enum('gender',['male','female']);
+            $table->string('gender');
             
             $table->string('locale')->nullable();
             $table->string('timezone')->nullable();
-            $table->boolean('verified')->default(true);
             $table->boolean('admin')->default(0);
 
 
@@ -43,6 +42,7 @@ class CreateUsersTable extends Migration
             $table->foreign('home_id')->references('id')->on('homes');
             $table->foreign('place_id')->references('id')->on('places');
             $table->rememberToken();
+            $table->boolean('verified')->default(true);
             $table->string('token')->nullable()->default(null);
             $table->timestamps();
             

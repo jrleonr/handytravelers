@@ -11,7 +11,7 @@
         </div>
 
         <a href="{{ route('edit.housemates') }}" class="button">{{ __('edit.completeYourhomeInfo') }}</a>
-        <a href="{{ route('request.form') }}" class="button is-primary">{{ __('edit.sendFirstRequest') }}</a>
+        <a href="{{ route('search') }}" class="button is-primary">{{ __('common.search') }}</a>
     </div>
 </section>
 

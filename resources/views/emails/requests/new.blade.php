@@ -1,11 +1,8 @@
 @component('mail::message')
 
-Hi {{ $name }},
+Hi {{ $user->first_name }},
 
-{{ $request->user->first_name }} is looking for a place to stay in your city. This is 
-the requests, feel free to invite this traveler to your home if you like. If you decide to ignore
-this request, {{ $name }}, will never know that. Just invite people over your place when you like 
-the request.
+{{ $request->user->first_name }} is looking for a place to stay in your city. Feel free to invite this traveler to your home if you like. Just invite people over your place when you like the request.
 
 Thanks for being part of this traveler community, you make Handytravelers a great place.
 
@@ -17,7 +14,7 @@ Thanks for being part of this traveler community, you make Handytravelers a grea
 @endcomponent
 
 @component('mail::panel')
-{{ str_limit($request->body, 150) }}
+{{ str_limit($request->lastMessage(), 150) }}
 @endcomponent
 
 @component('mail::button', ['url' => route('request.show', [$request->uuid]), 'color' => 'green'])

@@ -55,25 +55,29 @@ class Home extends Model
      */
     public function toSearchableArray()
     {
-        if(!$this->place) {
+        $place = $this->place;
+
+        if(!$place) {
             return [];
         }
+        
+        $this->users;
 
         $array = $this->toArray();
 
-        $place = $this->place;
-        $array['city'] = $place->name;
-        $users = $this->users;
-        foreach ($users as $user) {
-            $array['users']['username'] = $user->username;
-            $array['users']['first_name'] = $user->first_name;
-            $array['users']['image'] = $user->getMainPhoto(300);
-        }
-        
-        $ancestors = $place->getAncestors();
+        unset(
+            $array['place'], $array['place_id'], $array['id'],
+            $array['summary'], $array['rules'], $array['interaction'],
+            $array['accommodation'], $array['getting_around'], $array['other']
+        );
 
+        //set places
+        $array['_geoloc']['lat'] = floatval($place->lat);
+        $array['_geoloc']['lng'] = floatval($place->lgn);
+        $array['places']['city'] = $place->name;
+        $ancestors = $place->getAncestors();
         foreach ($ancestors as $a) {
-           $array[$a['type']] = $a->name;
+           $array['places'][$a['type']] = $a->name;
         }
 
         return $array;

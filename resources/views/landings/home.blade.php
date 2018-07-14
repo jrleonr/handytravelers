@@ -1,31 +1,51 @@
 @extends('handytravelers')
 @section('content')
 <section class="hero is-success is-large" style="   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
- background: no-repeat center center;
-  background-size: cover; background-image:url('{{asset('img/homepage.jpg')}}');">
+    -moz-osx-font-smoothing: grayscale;    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    background: no-repeat center center;
+    background-size: cover; background-image:url('{{asset('img/homepage.jpg')}}');">
     <div class="hero-body">
         <div class="container has-text-centered">
             <h1 class="title is-1">{{trans('common.titleHome')}}</h1>
             <h2 class="subtitle is-3">{{trans('common.subTitleHome')}}</h2>
-            <form action="{{ route('search') }}" method="get">
-                <div class="field">
-                  <div class="control">
-                    <input type="search" id="query" name="q" class="input" placeholder="Where are we going?" />
-                  </div>
+            <div class="columns is-centered">
+                <div class="column is-half is-narrow">
+                    <form action="{{ route('search') }}" method="get">
+                        <div class="field is-grouped">
+                          <div class="control is-expanded">
+                            <vue-google-autocomplete
+                                type="text"
+                                types="(cities)"
+                                autocomplete="off"
+                                class="input is-large"
+                                placeholder="Where do you want to go?"
+                                name="q"
+                                id="q"
+                                ref="address"
+                                v-on:placechanged="getAddressData"
+                                >
+                                </vue-google-autocomplete>
+                          </div>
+                          <div class="control">
+                            <button type="submit" class="button is-primary is-large">
+                              Search
+                            </button>
+                          </div>
+                        </div>
+
+                        
+                        
+                    </form>
                 </div>
-            
-            </form>
+            </div>
         </div>
     </div>
     <div class="hero-footer">
         <div class="container">
-        
-
+            
         </div>
     </div>
 </section>
-
 <section class="hero">
     <div class="hero-body">
         <div class="container has-text-centered">
@@ -42,7 +62,6 @@
         </div>
     </div>
 </section>
-
 <section class="section">
     <div class="container">
         <div class="columns">
@@ -61,26 +80,4 @@
         </div>
     </div>
 </section>
-
 @stop
-
-@section('javascript')
-<script src="https://cdn.jsdelivr.net/npm/places.js@1.7.3"></script>
-<script>
-(function() {
-  var placesAutocomplete = places({
-    container: document.querySelector('#query')
-  });
-
-  var $query = document.querySelector('#query-value')
-  placesAutocomplete.on('change', function(e) {
-    $query.textContent = e.suggestion.value 
-  });
-
-  placesAutocomplete.on('clear', function() {
-    $query.textContent = 'none';
-  });
-
-})();
-</script>
-@endsection

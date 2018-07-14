@@ -89,7 +89,7 @@
                                     
                                 </p>
                                 <span class=" help" >
-                                        {{ __("After you send it, you won't be able to edit or delete it. Think of this as when you send an email.") }}
+                                        
                                     </span>
                             </div>
                         </div>
@@ -101,5 +101,6 @@
 </section>
 @stop
 @section('javascript')
-<script src="{{ asset('js/datepicker.js') }}" defer></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+<script src="{{ asset('js/datepicker.js') }}"></script>
 @stop

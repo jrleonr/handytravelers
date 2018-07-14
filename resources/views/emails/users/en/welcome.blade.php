@@ -26,7 +26,6 @@ How it works
 @endcomponent
 
 PS. If you want you can reply to this email and share with me your story.
-PS2. Or you can follow me on Instagram <a href="https://www.instagram.com/jrleonr/"> @jrleonr </a>
 
 Buen camino,
 Jose.

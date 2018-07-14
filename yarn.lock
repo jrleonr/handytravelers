@@ -5845,7 +5845,7 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
-jquery-datepicker@^1.11.5:
+jquery-datepicker@^1.12.3:
   version "1.12.3"
   resolved "https://registry.yarnpkg.com/jquery-datepicker/-/jquery-datepicker-1.12.3.tgz#c08c9a25e8936298786b341672fab54b92d13003"
 

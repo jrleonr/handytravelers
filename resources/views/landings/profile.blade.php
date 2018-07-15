@@ -51,7 +51,7 @@
                 <div id="main" class="column ">
                     <div class="columns">
                         <div class="column  ">
-                    <a href="{{ route('request.form') }}/{{$profile->home->getUuid()}}" class="is-pulled-right button is-primary is-medium ">Request to Stay with {{ $profile->first_name }}</a>
+                    <a href="{{ route('request.form') }}/{{$profile->home->getUuid()}}" class="button is-primary is-medium ">Request to Stay with {{ $profile->first_name }}</a>
                 </div>
                     </div>
                     <div class="card">

@@ -33,6 +33,11 @@ class Home extends Model
         return $this->id;
     }
 
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
     public function getPlaceId()
     {
         return $this->place_id;

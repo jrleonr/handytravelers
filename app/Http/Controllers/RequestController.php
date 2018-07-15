@@ -71,7 +71,7 @@ class RequestController extends Controller
      */
     public function showRequestForm($home)
     {
-        $home = Home::where('id', $home)->with('users')->first();
+        $home = Home::where('uuid', $home)->with('users')->first();
 
         if (!Auth::user()->isFilled()) {
             return redirect()->route('edit.profile')->with('error', 'Complete your profile first');
@@ -99,7 +99,7 @@ class RequestController extends Controller
         
         $user = Auth::user();
         $data = $request->all();
-        $home = Home::where('id', $data['home_id'])->first();
+        $home = Home::where('uuid', $data['home_id'])->first();
 
         if (!$user->isFilled()) {
             throw new ProfileNotCompletedException;
@@ -173,7 +173,7 @@ class RequestController extends Controller
                  if ($homeRequest->isInactive()) {
                     throw new \Exception("You are not allow to anwser this request because is close");
                 }
-            
+
                 if ($homeRequest->isGuest($user)) {
                     throw new GuestsCannotAnswerRequestException("You can't do that");
                 }

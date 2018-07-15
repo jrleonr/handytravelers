@@ -1,6 +1,10 @@
 @extends('handytravelers')
-@section('meta-title', "Blabla")
-@section('meta-description', "Blabla ")
+@section('title')
+Stay with Locals in @isset($city) {{ $city }} @endisset @isset($country) {{ $country }} @endisset 
+@endsection
+@section('description')
+Surf for locals and stay in a couch in  @isset($city) {{ $city }} @endisset @isset($country) {{ $country }} @endisset
+@endsection
 @section('content')
 <div class="section">
     <div class="container">

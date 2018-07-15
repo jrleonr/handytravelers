@@ -1,6 +1,6 @@
 @extends('handytravelers')
-@section('meta-title', "Blabla")
-@section('meta-description', "Blabla ")
+@section('title', "Stay, work and live with Locals around the world")
+@section('description', "Surf for locals and stay in a couch in all these places ")
 @section('content')
 <div class="section">
     <div class="container">

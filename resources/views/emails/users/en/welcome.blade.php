@@ -17,12 +17,12 @@ If you are like me. You know what is the best part of travelling...
 
 During my last hitchhiking trip from London to Istanbul I discovered how kind people are.
 
-Then I thought... why I can not look for accommodation as I hitchhike. So, I create, Handytravelers.
+ So, I create, Handytravelers. A way to find the nice people everywhere you are and stay, work and live with them.
 
-Learn how it works...
+Feel your profile and start using Handytravelers now...
 
-@component('mail::button', ['url' => 'https://handytravelers.com/en/how-it-works'])
-How it works
+@component('mail::button', ['url' => 'https://handytravelers.com'])
+Go to Handytravelers
 @endcomponent
 
 PS. If you want you can reply to this email and share with me your story.

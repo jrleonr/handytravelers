@@ -40,17 +40,10 @@ class UserRegistered extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        if (str_contains($notifiable->locale, 'en')) {
-            return (new MailMessage)
+        return (new MailMessage)
             ->from('joseleon@handytravelers.com', 'Jose at Handytravelers')
             ->subject('Does this sound like you?')
             ->markdown('emails.users.en.welcome', ['user' => $notifiable]);
-        } else {
-            return (new MailMessage)
-            ->from('joseleon@handytravelers.com', 'Jose de Handytravelers')
-            ->subject('¿Te recuerda a ti?')
-            ->markdown('emails.users.es.welcome', ['user' => $notifiable]);
-        }
     }
 
     /**
